@@ -31,6 +31,7 @@ if (isset($_POST['addToCart'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styleClient.css">
     <title>Document</title>
@@ -104,8 +105,6 @@ if (isset($_POST['addToCart'])) {
             padding: 0px 6px;
             background-color: red;
             border-radius: 40px;
-            right: 35px;
-            top:25px;
         }
         .panier{
             position: fixed;
@@ -192,6 +191,7 @@ if (isset($_POST['addToCart'])) {
         align-items: center;
         column-gap: 0.5rem;
         border-radius: 40px 0 0 40px ;
+        
         }
         .col img{
             margin-top: 40px;
@@ -200,31 +200,17 @@ if (isset($_POST['addToCart'])) {
         
     </style>
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 <body>
     <header style="background-color:  #ffffff50; height:80px; width:100%; position:absolute;  top:0;">
-        <!-- <nav  style="height: 40px;display: flex;justify-content: space-between; padding:40px ; margin-top:-40px">
-            
-            <div class="logo" style="color:black "></div>
-            <a href="panier.php" class="panier" style="background-color: white;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-            </svg>
-            </a>
-            <p class="position-fixed count"><?php echo $count ?></p>
-        </nav> -->
         <nav class="nav container" >
-                <a href="#" class="nav__logo">
+                <a href="client.php" class="nav__logo">
                     <img src="plantes/logo.png" alt="logo">
                 </a> 
-               <div class="search">
-
-               </div>
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li >
-                            <a href="connection.php"  style="font-size: 20px ; ">Home</a>
+                            <a href="client.php"  style="font-size: 20px ; ">Home</a>
                         </li>
                         <li class="nav__item">
                             <a href="blog.php"  style="font-size: 20px;">Blog</a>
@@ -243,10 +229,19 @@ if (isset($_POST['addToCart'])) {
                         </a>
                         </form>
                       </li>
-                    </ul>
+                      <li >
+                    <a href="panier.php" class="d-flex">
+                        <svg xmlns="http://www.w3.org/2000/svg"  width="30" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                        </svg>
+                        <p class=" count"><?php echo $count ?></p>
+                    </a> 
+                      </li>
+                    </ul>  
 
-                    
-                </div>
+                    <!-- <div class="logo" style="height: 40px;display: flex;justify-content: space-between; padding:40px ; margin-top:0px; color:black"></div> -->
+
+                    </div>   
             </nav>
     </header>
     <section class="sec1" style="margin-top: 80px;">
@@ -277,6 +272,7 @@ if (isset($_POST['addToCart'])) {
                 <form method="get" action="" class="d-flex justify-content-center" role="search">
                     <a class="navbar-brand" href="?view_all" style="color:white">View All</a>
 
+                    <div style="display: flex; justify-content:space-between">
                     <select name="categorie" id="categorieSelect" style="border-radius: 5px; height:38px" onchange="submitForm()">
                         <option value="all">Toutes les catégories</option>
                         <?php
@@ -291,6 +287,7 @@ if (isset($_POST['addToCart'])) {
                     <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" id="searchInput" style="height: 40px;">
                     <button class=" searchbtn btn-success"name="search_but" type="sumbit" style=" border-radius: 0 40px  40px 0; height:40px">GO</button>
                     </form>
+                    </div>
 
                 </form>
 
