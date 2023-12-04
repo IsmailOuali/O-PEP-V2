@@ -22,7 +22,10 @@ if (isset($_POST['addToCart'])) {
     }
 }
 
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +48,7 @@ if (isset($_POST['addToCart'])) {
         font-size: 3.5vw;
         width: 24vw;
         color: black;
+        width: 40vw;
     }
 
     .sec1 p {
@@ -208,57 +212,64 @@ if (isset($_POST['addToCart'])) {
             </nav>
     </header>    
   <hr color="black" size="1" style=" margin-top: 100px">
-    <section class="sec1 d-flex" style="width: 100%;">
-  
-        <div class="division1" style="width: 42%">
-            <img src="plantes/jardin.jpg" style="height: 45vw; width:40vw; padding:24px " alt="img">
-        </div>
-        <div class="division2" style="width: 58%; padding:24px ">
-            <div >
-                <h1>Le Jardin</h1>
-                <p>Qu’il soit exigu, suspendu ou à perte de vue, qu’il soit le prolongement d’une maison ou qu’il
-                    tienne sur un coin de balcon, le jardin, c’est l’endroit des possibles. Que vous soyez novice
-                    ou confirmé, exigeant ou conciliant, nos spécialistes vous dévoilent tous leurs secrets et vous
-                    accompagnent pas à pas pour faire de votre jardin, votre nouvel eden. Notre sélection d’articles 
-                    vous donnera toute la matière nécessaire pour en savoir plus sur l’univers du jardinage et la 
-                    décoration de votre joli cocon. Nos conseils et astuces vous apporteront, quant à eux, toutes les 
-                    préconisations spécifiques adaptées à chaque variété de plantes (arrosage, rempotage, exposition…). 
-                    Nous vous avons préparé tout ce qu’il faut pour que vous osiez jardiner 
-                    (sur un coin de balcon ou au bout de la maison) sans plus aucune appréhension... Eh oui, il n’a jamais
-                    été aussi facile d’avoir la main verte !
-                </p>
-            </div>
-            <div class="division12" style=" margin-top:40px">
-            <a href="#" style="text-decoration: none;">
-                <table>
-                <tr>
-                    <td style=" border: 1px solid black;  padding: 10px; width:35vw ; gap:50px"  class="d-flex" >
-                        <img src="plantes/jardin2.jpg" style="height: 10vw;width:10vw" alt="img">
-                        <div class="d-flex flex-column">
-                            <h3 style="color: black;">Tout sur...les variétés</h3>
-                            <div class="d-flex" style=" align-items: center; gap:10px">
-                                <a href="#" style="color: black; " style="text-decoration: none;">En savoir plus</a>
-                                <svg width="14" height="12" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M-4.97198e-07 6.77851L11.0896 6.77851L7.06538 10.8992L8.14044 12L14 6L8.14044
-                                4.41415e-07L7.06538 1.10082L11.0896 5.22149L-3.61078e-07 5.22149L-4.97198e-07 6.77851Z">
-                                </path>
-                                </svg>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </table>    
-                
 
-                </a>
+    <?php
+    // Sélectionner tous les thèmes depuis la base de données
+    $selectThemesQuery = "SELECT * FROM themes";
+    $themesResult = $conn->query($selectThemesQuery);
+
+    if ($themesResult->num_rows > 0) {
+    // Boucle à travers chaque thème
+    while ($theme = $themesResult->fetch_assoc()) {
+        $themeTitle = $theme['nomTh'];
+        $themeDescription = $theme['descriptionTh'];
+        $themeImage = $theme['imageTh'];
+        ?>
+
+        <section class="sec1 d-flex" style="width: 100%;">
+            <div class="division1" style="width: 42%">
+                <img src="plantes/<?php echo $themeImage; ?>.jpg" style="height: 45vw; width:40vw; padding:24px " alt="<?php echo $themeTitle; ?>">
             </div>
-                 
-        </div>
-    </section>
-    <hr color="black" size="1" >
-    
-    <section class="sec2"></section>
-    <section class="sec3"></section>
+            <div class="division2" style="width: 58%; padding:24px ">
+                <div>
+                    <h1><?php echo $themeTitle; ?></h1>
+                    <p><?php echo $themeDescription; ?></p>
+                </div>
+                <div class="division12" style=" margin-top:40px">
+                    <a href="#" style="text-decoration: none;">
+                        <table>
+                            <tr>
+                                <td style=" border: 1px solid black;  padding: 10px; width:35vw ; gap:50px"  class="d-flex" >
+                                    <img src="plantes/<?php echo $themeImage; ?>.jpg" style="height: 10vw;width:10vw" alt="<?php echo $themeTitle; ?>">
+                                    <div class="d-flex flex-column">
+                                        <h3 style="color: black;">Tout sur... <?php echo $themeTitle; ?></h3>
+                                        <div class="d-flex" style=" align-items: center; gap:10px">
+                                            <a href="#" style="color: black; " style="text-decoration: none;">En savoir plus</a>
+                                            <svg width="14" height="12" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M-4.97198e-07 6.77851L11.0896 6.77851L7.06538 10.8992L8.14044 12L14 6L8.14044
+                                                4.41415e-07L7.06538 1.10082L11.0896 5.22149L-3.61078e-07 5.22149L-4.97198e-07 6.77851Z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </a>
+                </div>
+            </div>
+            
+        </section>
+<hr color="black" size="1" >
+        <?php
+    }
+} else {
+    // Gérer le cas où aucun thème n'est trouvé
+    echo "Aucun thème trouvé.";
+}
+?>
+
+   
 </body>
 
 </html>
