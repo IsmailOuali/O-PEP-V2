@@ -86,6 +86,6 @@ if(isset($_POST["save_data"]) ) {
     </div>
 </div>
 
-<img src="" alt="" srcset="">
+
 
 <?php include './include/footer.php' ?>
