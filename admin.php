@@ -10,7 +10,7 @@ if (isset($_POST['submitPlante'])) {
     $descriptionPlante = $_POST['descriptionPlante'];
     $stockPlante = $_POST['stockPlante'];
     $prix = $_POST['prix'];
-    $idCategorie = $_POST['idCategorie']; // Ajout de cette ligne
+    $idCategorie = $_POST['idCategorie']; 
 
     $query ="INSERT INTO plantes (nomPlante, imagePlante, descriptionPlante, stock, prix, idCategorie) VALUES ('$nomPlante','$imagePlante' ,'$descriptionPlante','$stockPlante','$prix','$idCategorie')";
     $result = $conn->query($query);
@@ -72,6 +72,51 @@ if (isset($_POST['submitModificationCategorie'])) {
         echo "<script>alert('Erreur lors de la modification de la catégorie. Veuillez réessayer.')</script>";
     }
 }
+
+
+
+//ajouter theme
+if(isset($_POST['submitTheme'])){
+
+    $nomTheme = $_POST['nomTheme'];
+    $descriptionTheme = $_POST['descriptionTheme'];
+    $imageTheme = $_POST['imageTheme'];
+    
+    // Vérifier le type de $_POST['tags']
+    if (is_array($_POST['tags'])) {
+        // Si c'est un tableau, peut-être que vous voudrez le traiter de manière appropriée
+        // Peut-être concaténer les éléments du tableau en une seule chaîne, ou choisir une autre approche
+        $tags = implode(',', $_POST['tags']);
+    } else {
+        $tags = $_POST['tags'];
+    }
+
+    //inserer dans la table themes
+    $insertThemeQuery = "INSERT INTO themes (nomTh, descriptionTh, imageTh) VALUES ('$nomTheme', '$descriptionTheme', '$imageTheme')";
+    $conn->query($insertThemeQuery);
+
+    // Récupérer l'ID du thème inséré
+    $idTheme = $conn->insert_id;
+
+    // inserer les tags
+    $tagsArray = explode(',', $tags);
+    foreach ($tagsArray as $tag) {
+        $tag = trim($tag);
+
+        //inserer les tags dans la table tags
+        $insertTagQuery = "INSERT INTO tags (nomTag) VALUES ('$tag')";
+        $conn->query($insertTagQuery);
+
+        // Récupérer l'ID du tag inséré
+        $idTag = $conn->insert_id;
+
+        // Insérer le lien dans la table tags_theme
+        $insertLinkQuery = "INSERT INTO tags_theme (idTh, idTag) VALUES ('$idTheme', '$idTag')";
+        $conn->query($insertLinkQuery);
+    }
+}
+
+
 ?>
 
 
@@ -117,6 +162,11 @@ if (isset($_POST['submitModificationCategorie'])) {
                         <div class="sidebar--item" onclick="afficherFormulaireSuppressionPlante()">Supprimer Plante</div>
                     </a>
                 </li>
+                <li>
+                    <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireAjoutTheme()">Ajouter Theme</div>
+                    </a>
+                </li>
             </ul>
             <ul class="sidebar--bottom--items">
                 <li>
@@ -158,7 +208,6 @@ if (isset($_POST['submitModificationCategorie'])) {
                 </select><br>
                 <label for="nomPlante">Nom de la Plante:</label>
                 <input type="text" id="nomPlante" name="nomPlante" required><br>
-QS%M%µMQ
                 <label for="imagePlante">Image de la Plante (URL):</label>
                 <input type="text" id="imagePlante" name="imagePlante" required><br>
 
@@ -239,8 +288,29 @@ function afficherFormulaireModificationCategorie() {
         </form>
     `;
 }
+    // ----------------------------------------------FormulaireAjoutTheme------------------------------------
+    function afficherFormulaireAjoutTheme() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+        <div class="close-button" onclick="fermerFormulaireAjoutTheme()">X</div>
+        <h2>Ajouter Theme</h2>
+        <form method="POST" onsubmit="ajouterTheme(); return false;">
+            <label for="nomTheme">Nom de Theme:</label>
+            <input type="text" id="nomTheme" name="nomTheme"><br>
+            <label for="descriptionTheme">Description de Theme:</label>
+            <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
+            <label for="imageTheme">Image de Theme:</label>
+            <input type="text" id="imageTheme" name="imageTheme"><br>
+            <label for="tags">Tags (séparés par des virgules):</label>
+            <input type="text" id="tags" name="tags"><br>
+            <button type="submit" name="submitTheme">Ajouter</button>
+        </form>
+    `;
+}
+
 
 //****************************************************************************************************************** */
+
 function fermerFormulaireModificationCategorie() {
     var formContainer = document.getElementById("formContainer");
     formContainer.innerHTML = "";
@@ -269,4 +339,5 @@ function fermerFormulaireAjoutCategorie() {
 <!-- ... Votre code JavaScript existant ... -->
 
 </body>
+
 </html>
