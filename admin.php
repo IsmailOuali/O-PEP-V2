@@ -58,6 +58,20 @@ if (isset($_POST['submitSuppressionPlante'])) {
     }
 }
 
+// Suppression de articles
+if (isset($_POST['submitSuppressionArticle'])) {
+    $idarticleSuppression = $_POST['idarticleSuppression'];
+
+    $query = "DELETE FROM articles WHERE idAr = '$idarticleSuppression'";
+    $result = $conn->query($query);
+
+    if ($result) {
+        echo "<script>alert('article supprimée avec succès.')</script>";
+    } else {
+        echo "<script>alert('Erreur lors de la suppression de la article. Veuillez réessayer.')</script>";
+    }
+}
+
 
 // Modification de catégorie
 if (isset($_POST['submitModificationCategorie'])) {
@@ -185,6 +199,11 @@ if ($result) {
                 </li>
                 <li>
                     <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticles()">Supprimer Article</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <div class="sidebar--item" onclick="afficherFormulaireAjoutTheme()">Ajouter Theme</div>
                     </a>
                 </li>
@@ -286,6 +305,29 @@ if ($result) {
                 ?>
             </select><br>
             <button id="bttn" type="submit" name="submitSuppressionPlante">Supprimer</button>
+        </form>
+    `;
+}
+
+// ----------------------------------------------FormulaireSupprimerArticle------------------------------------
+    function afficherFormulaireSuppressionArticles() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+        <div class="close-button" onclick="fermerFormulaireSuppressionArticles()">X</div>
+        <h2>Supprimer Plante</h2>
+        <form method="POST">
+            <label for="idarticleSuppression">Sélectionnez l'article à supprimer :</label>
+            <select id="idarticleSuppression" name="idarticleSuppression" class="form-control" required>
+                <?php
+
+                $articlesQuery = $conn->query("SELECT * FROM articles");
+
+                while ($article = $articlesQuery->fetch_assoc()) {
+                    echo "<option value='{$article['idAr']}'>{$article['nomAr']}</option>";
+                }
+                ?>
+            </select><br>
+            <button id="bttn" type="submit" name="submitSuppressionArticle">Supprimer</button>
         </form>
     `;
 }
