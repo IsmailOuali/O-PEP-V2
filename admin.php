@@ -17,7 +17,8 @@ if (isset($_POST['submitPlante'])) {
 
     if ($result) {
         echo "<script>alert('Plante ajoutée avec succès.')</script>";
-    } else {
+    } 
+    else {
         echo "<script>alert('Erreur lors de l'ajout de la plante. Veuillez réessayer.')</script>";
     }
 }
@@ -325,7 +326,7 @@ function afficherFormulaireModificationCategorie() {
             <label for="descriptionTheme">Description de Theme:</label>
             <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
             <label for="imageTheme">Image de Theme:</label>
-            <input type="text" id="imageTheme" name="imageTheme"><br>
+            <input type="file" accept="plantes/jpg, plantes/png" id="imageTheme" name="imageTheme"><br>
             <label for="tags">Tags (séparés par des virgules):</label>
             <input type="text" id="tags" name="tags"><br>
             <button type="submit" name="submitTheme">Ajouter</button>
