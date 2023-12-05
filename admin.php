@@ -17,8 +17,7 @@ if (isset($_POST['submitPlante'])) {
 
     if ($result) {
         echo "<script>alert('Plante ajoutée avec succès.')</script>";
-    } 
-    else {
+    } else {
         echo "<script>alert('Erreur lors de l'ajout de la plante. Veuillez réessayer.')</script>";
     }
 }
@@ -47,28 +46,19 @@ if (isset($_POST['submitCategorie'])) {
 // Suppression de plante
 if (isset($_POST['submitSuppressionPlante'])) {
     $idPlanteSuppression = $_POST['idPlanteSuppression'];
+    
+    // Supprimer les enregistrements liés dans details_commande
+    $queryDetails = "DELETE FROM details_commande WHERE idPlante = '$idPlanteSuppression'";
+    $resultDetails = $conn->query($queryDetails);
 
-    $query = "DELETE FROM plantes WHERE idPlante = '$idPlanteSuppression'";
-    $result = $conn->query($query);
+    // Supprimer la plante dans plantes
+    $queryPlante = "DELETE FROM plantes WHERE idPlante = '$idPlanteSuppression'";
+    $resultPlante = $conn->query($queryPlante);
 
     if ($result) {
         echo "<script>alert('Plante supprimée avec succès.')</script>";
     } else {
         echo "<script>alert('Erreur lors de la suppression de la plante. Veuillez réessayer.')</script>";
-    }
-}
-
-// Suppression de articles
-if (isset($_POST['submitSuppressionArticle'])) {
-    $idarticleSuppression = $_POST['idarticleSuppression'];
-
-    $query = "DELETE FROM articles WHERE idAr = '$idarticleSuppression'";
-    $result = $conn->query($query);
-
-    if ($result) {
-        echo "<script>alert('article supprimée avec succès.')</script>";
-    } else {
-        echo "<script>alert('Erreur lors de la suppression de la article. Veuillez réessayer.')</script>";
     }
 }
 
@@ -199,11 +189,6 @@ if ($result) {
                 </li>
                 <li>
                     <a href="#">
-                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticles()">Supprimer Article</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
                         <div class="sidebar--item" onclick="afficherFormulaireAjoutTheme()">Ajouter Theme</div>
                     </a>
                 </li>
@@ -309,29 +294,6 @@ if ($result) {
     `;
 }
 
-// ----------------------------------------------FormulaireSupprimerArticle------------------------------------
-    function afficherFormulaireSuppressionArticles() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = `
-        <div class="close-button" onclick="fermerFormulaireSuppressionArticles()">X</div>
-        <h2>Supprimer Plante</h2>
-        <form method="POST">
-            <label for="idarticleSuppression">Sélectionnez l'article à supprimer :</label>
-            <select id="idarticleSuppression" name="idarticleSuppression" class="form-control" required>
-                <?php
-
-                $articlesQuery = $conn->query("SELECT * FROM articles");
-
-                while ($article = $articlesQuery->fetch_assoc()) {
-                    echo "<option value='{$article['idAr']}'>{$article['nomAr']}</option>";
-                }
-                ?>
-            </select><br>
-            <button id="bttn" type="submit" name="submitSuppressionArticle">Supprimer</button>
-        </form>
-    `;
-}
-
 // ----------------------------------------------FormulaireModiferCategorie------------------------------------
 function afficherFormulaireModificationCategorie() {
     var formContainer = document.getElementById("formContainer");
@@ -368,7 +330,7 @@ function afficherFormulaireModificationCategorie() {
             <label for="descriptionTheme">Description de Theme:</label>
             <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
             <label for="imageTheme">Image de Theme:</label>
-            <input type="file" accept="plantes/jpg, plantes/png" id="imageTheme" name="imageTheme"><br>
+            <input type="text" id="imageTheme" name="imageTheme"><br>
             <label for="tags">Tags (séparés par des virgules):</label>
             <input type="text" id="tags" name="tags"><br>
             <button type="submit" name="submitTheme">Ajouter</button>
