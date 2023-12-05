@@ -3,13 +3,9 @@ include("traitement.php") ;
 $idth=$_GET['id'];
 session_start();
 $idUser=$_SESSION['idUtl'];
-// $desc="";
 if(isset($_POST["save_data"]) ) {
     $name=$_POST['namarticle'];
-    // $desc=$_POST['description_a'];
      $desc = mysqli_real_escape_string($conn, $_POST['description_a']);
-
-   
     date_default_timezone_set("Africa/Casablanca");
     $date = date("Y-m-d H:i:s");
 
@@ -26,9 +22,7 @@ if(isset($_POST["save_data"]) ) {
         move_uploaded_file($i_tmp, $upload_path);
         $qery="INSERT INTO articles( nomAr, descriptionAr, imageAr, dateAr, idUtl, idTh)
         VALUES ('$name', '$desc', '$upload_path','$date','$idUser','$idth')";
-       
         $result=mysqli_query($conn,$qery);
-     
     }  
 }
 
