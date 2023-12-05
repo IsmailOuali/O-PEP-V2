@@ -91,9 +91,12 @@ if(isset($_POST["save_data"]) ) {
 <div class="card mb-4 col- "style="width:30%">
 
 
-  <div class=" mt-2 text-center ">
-    <img class="card-img-top text-center" style="width : 20vw;
-height : 20vh;" src="<?php echo $row[3]?>"
+
+
+=======
+  <div class=" mt-2 ">
+    <img class="card-img-top " style="height: 20vw;" src="<?php echo $row[3]?>"
+>>>>>>> rabii
       alt="Card image cap">
   </div>
 

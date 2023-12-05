@@ -65,6 +65,7 @@ if (isset($_POST['submitSuppressionPlante'])) {
 
 // Modification de catégorie
 if (isset($_POST['submitModificationCategorie'])) {
+    
     $idCategorieModification = $_POST['idCategorieModification'];
     $nouveauNomCategorie = $_POST['nouveauNomCategorie'];
 
