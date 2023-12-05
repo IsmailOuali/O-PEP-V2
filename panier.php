@@ -27,7 +27,7 @@ if (isset($_POST['commander'])) {
         $resultSuppressionPanier = $conn->query($requeteSuppressionPanier);
 
         echo "<script>alert('Commande validée avec succès')</script>";
-        header("Location: client.php");
+        header("Location: php/client.php");
         exit();
     } else {
         echo "<script>alert('Erreur lors de la validation de la commande')</script>";
@@ -41,7 +41,7 @@ if (isset($_POST['commander'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylePanier.css">
+    <link rel="stylesheet" href="css2/stylePanier.css">
     <title>Document</title>
 </head>
 <body style="background-color: #132A13;">

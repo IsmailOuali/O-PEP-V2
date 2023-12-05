@@ -57,7 +57,6 @@ if (isset($_POST['submitSuppressionPlante'])) {
     }
 }
 
-
 // Modification de catégorie
 if (isset($_POST['submitModificationCategorie'])) {
     $idCategorieModification = $_POST['idCategorieModification'];
@@ -72,8 +71,6 @@ if (isset($_POST['submitModificationCategorie'])) {
         echo "<script>alert('Erreur lors de la modification de la catégorie. Veuillez réessayer.')</script>";
     }
 }
-
-
 
 //ajouter theme
 if(isset($_POST['submitTheme'])){
@@ -90,31 +87,53 @@ if(isset($_POST['submitTheme'])){
     } else {
         $tags = $_POST['tags'];
     }
+//inserer dans la table themes
+$insertThemeQuery = "INSERT INTO themes (nomTh, descriptionTh, imageTh) VALUES ('$nomTheme', '$descriptionTheme', '$imageTheme')";
+$conn->query($insertThemeQuery);
 
-    //inserer dans la table themes
-    $insertThemeQuery = "INSERT INTO themes (nomTh, descriptionTh, imageTh) VALUES ('$nomTheme', '$descriptionTheme', '$imageTheme')";
-    $conn->query($insertThemeQuery);
+// Récupérer l'ID du thème inséré
+$idTheme = $conn->insert_id;
 
-    // Récupérer l'ID du thème inséré
-    $idTheme = $conn->insert_id;
+// inserer les tags
+$tagsArray = explode(',', $tags);
+foreach ($tagsArray as $tag) {
+    $tag = trim($tag);
 
-    // inserer les tags
-    $tagsArray = explode(',', $tags);
-    foreach ($tagsArray as $tag) {
-        $tag = trim($tag);
+    //inserer les tags dans la table tags
+    $insertTagQuery = "INSERT INTO tags (nomTag) VALUES ('$tag')";
+    $conn->query($insertTagQuery);
 
-        //inserer les tags dans la table tags
-        $insertTagQuery = "INSERT INTO tags (nomTag) VALUES ('$tag')";
-        $conn->query($insertTagQuery);
+    // Récupérer l'ID du tag inséré
+    $idTag = $conn->insert_id;
 
-        // Récupérer l'ID du tag inséré
-        $idTag = $conn->insert_id;
+    // Insérer le lien dans la table tags_theme
+    $insertLinkQuery = "INSERT INTO tags_theme (idTh, idTag) VALUES ('$idTheme', '$idTag')";
+    $conn->query($insertLinkQuery);
+}};
 
-        // Insérer le lien dans la table tags_theme
-        $insertLinkQuery = "INSERT INTO tags_theme (idTh, idTag) VALUES ('$idTheme', '$idTag')";
-        $conn->query($insertLinkQuery);
-    }
+
+//suprimer theme
+
+if (isset($_POST['submitSuppressiontheme'])) {
+    $idTheme = $_POST['idthemeSuppression'];
+// Supprimer les enregistrements liés dans tags_theme
+$deleteTagsThemeQuery = "DELETE FROM tags_theme WHERE idTh = '$idTheme'";
+$conn->query($deleteTagsThemeQuery);
+
+// Ensuite, supprimer le thème lui-même
+$deleteThemeQuery = "DELETE FROM themes WHERE idTh = '$idTheme'";
+$result = $conn->query($deleteThemeQuery);
+
+if ($result) {
+    echo "<script>alert('Le thème a été supprimé avec succès.')</script>";
+} else {
+    echo "<script>alert('Erreur lors de la suppression du thème. Veuillez réessayer.')</script>";
 }
+}
+ 
+
+// Modifier Theme
+
 
 
 ?>
@@ -130,7 +149,7 @@ if(isset($_POST['submitTheme'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styleAdmin.css">
+    <link rel="stylesheet" href="css2/styleAdmin.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>OPEP</title>
@@ -163,10 +182,24 @@ if(isset($_POST['submitTheme'])){
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                <a href="#">
                         <div class="sidebar--item" onclick="afficherFormulaireAjoutTheme()">Ajouter Theme</div>
                     </a>
                 </li>
+
+                <li>
+                 <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireModifiTeme()">Modifier Theme</div>
+                    </a>
+                </li>
+                <li>
+                 <a href="#">
+                        <div class="sidebar--item" onclick="supprimerFormulaireTheme()">Supprimer Theme</div>
+                    </a>
+                    </li>
+
+
+
             </ul>
             <ul class="sidebar--bottom--items">
                 <li>
@@ -308,6 +341,54 @@ function afficherFormulaireModificationCategorie() {
     `;
 }
 
+// ----------------------------------------------FormulaireSuprimerTheme------------------------------------
+
+function supprimerFormulaireTheme(){
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+        <h2>Supprimer Theme</h2>
+        <form method="POST">
+            <label for="idthemeSuppression">Sélectionnez leTheme à supprimer :</label>
+            <select id="idthemeSuppression" name="idthemeSuppression" class="form-control" required>
+                <?php
+
+                $themesQuery = $conn->query("SELECT * FROM themes");
+
+                while ($theme = $themesQuery->fetch_assoc()) {
+                    echo "<option value='{$theme['idTh']}'>{$theme['nomTh']}</option>";
+                }
+                ?>
+            </select><br>
+            <button id="bttn" type="submit" name="submitSuppressiontheme">Supprimer</button>
+        </form>
+    `;
+}
+// ----------------------------------------------FormulaireModifieerTheme------------------------------------
+
+function afficherFormulaireModifiTeme() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+        <h2>Modifier Theme</h2>
+        <form method="POST">
+            <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
+            <select id="idThemeModification" name="idThemeModification" class="form-control" required>
+                <?php
+                // Récupérer les catégories depuis la base de données
+                $themesQuery = $conn->query("SELECT * FROM themes");
+
+                while ($theme = $themesQuery->fetch_assoc()) {
+                    echo "<option value='{$theme['idTh']}'>{$theme['nomTh']}</option>";
+                }
+                ?>
+            </select><br>
+            <label for="nouveauNomCategorie">Nouveau nom du Theme :</label>
+            <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
+            <button type="submit" name="submitModificationTheme">Modifier</button>
+        </form>
+    `;
+}
+
+
 
 //****************************************************************************************************************** */
 
@@ -333,7 +414,10 @@ function fermerFormulaireAjoutCategorie() {
     var formContainer = document.getElementById("formContainer");
     formContainer.innerHTML = ""; 
 }
-
+function fermerFormulaireModificationTheme() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = ""; 
+}
 </script>
 
 <!-- ... Votre code JavaScript existant ... -->

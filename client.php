@@ -1,7 +1,6 @@
 
-
-<?php include("traitement.php"); 
-
+<?php 
+include("traitement.php") ;
 session_start();
 $userId = $_SESSION['idUtl'];
 $reqet="SELECT * FROM panier JOIN plantes ON panier.idPlante = plantes.idPlante WHERE idUtl= $userId";
@@ -32,8 +31,9 @@ if (isset($_POST['addToCart'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="styleClient.css">
+    <link rel="stylesheet" href="css2/styleClient.css">
     <title>Document</title>
     <style>
         body {
@@ -288,9 +288,7 @@ if (isset($_POST['addToCart'])) {
                     <button class=" searchbtn btn-success"name="search_but" type="sumbit" style=" border-radius: 0 40px  40px 0; height:40px">GO</button>
                     </form>
                     </div>
-
                 </form>
-
             </div>
         </nav>
     </section>
@@ -395,6 +393,10 @@ if (isset($_POST['addToCart'])) {
     }
     </script>
     
+
+
+    
+   
 </body>
 </html>
 
