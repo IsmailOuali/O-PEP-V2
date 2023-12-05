@@ -237,7 +237,7 @@ if (isset($_POST['addToCart'])) {
                     <p><?php echo $themeDescription; ?></p>
                 </div>
                 <div class="division12" style=" margin-top:40px">
-                    <a href="#" style="text-decoration: none;">
+                    <a href="./article.php?id=<?php echo $idth; ?>" style="text-decoration: none;">
                         <table>
                             <tr>
                                 <td style=" border: 1px solid black;  padding: 10px; width:35vw ; gap:50px"  class="d-flex" >
