@@ -215,12 +215,7 @@ if (isset($_POST['addToCart'])) {
                         <li class="nav__item">
                             <a href="blog.php"  style="font-size: 20px;">Blog</a>
                         </li>
-                        <!-- shopping cart -->
-                        <li>
-                          <a href="panier.php" style="cursor: pointer;">
-                            <i class="ri-shopping-bag-line" style="font-size:27px;"></i>
-                        </a>
-                      </li>
+
                          <!-- log out -->
                         <li>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
@@ -268,7 +263,7 @@ if (isset($_POST['addToCart'])) {
     <!-- ... ________________ ... -->
     <section class="sec2 d-flex justify-content-center mt-5">
         <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border:1px solid white; border-radius:20px; width:40%;">
-            <div class="container-fluid "style="dispaly:flex; gap:1.3vw">
+            <div class="container-fluid "style="dispaly:flex; flex-between">
                 <form method="get" action="" class="d-flex justify-content-center" role="search">
                     <a class="navbar-brand" href="?view_all" style="color:white">View All</a>
 
@@ -283,12 +278,12 @@ if (isset($_POST['addToCart'])) {
                         }
                         ?>
                     </select>
-                    <form method="get" class="d-flex justify-content-center"style="gap:1px">
+
+                    </div>
+                </form>
+                <form method="get" class="d-flex justify-content-center"style="margin-left:50px">
                     <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" id="searchInput" style="height: 40px;">
                     <button class=" searchbtn btn-success"name="search_but" type="sumbit" style=" border-radius: 0 40px  40px 0; height:40px">GO</button>
-                    </form>
-                    </div>
-
                 </form>
 
             </div>
