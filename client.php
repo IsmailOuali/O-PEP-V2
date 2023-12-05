@@ -364,28 +364,7 @@ if (isset($_POST['addToCart'])) {
            
             ?>
         </div>
-        <footer>
-            <div class="green d-flex flex-column">
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-            </div>
-            <div class="information d-flex flex-colum">
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-            </div>
-            <div class="contact d-flex flex-colum">
-                <p>test</p>
-                <p>test</p>
-            </div>
-            <div class="newletters d-flex flex-colum">
-                <p>test</p>
-                <p>test</p>
-            </div>
-        </footer>
+
 
         <!-- ... (Pagination) ... -->
 
@@ -403,6 +382,7 @@ if (isset($_POST['addToCart'])) {
         echo '</nav>';
         ?>
     </section>
+
     <script>
     function submitForm() {
         document.getElementById('categorieSelect').form.submit();
