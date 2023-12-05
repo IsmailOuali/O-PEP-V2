@@ -117,6 +117,26 @@ if(isset($_POST['submitTheme'])){
 }
 
 
+//suprimer theme
+
+if (isset($_POST['submitSuppressiontheme'])) {
+    $idTheme = $_POST['idthemeSuppression'];
+// Supprimer les enregistrements liés dans tags_theme
+$deleteTagsThemeQuery = "DELETE FROM tags_theme WHERE idTh = '$idTheme'";
+$conn->query($deleteTagsThemeQuery);
+
+// Ensuite, supprimer le thème lui-même
+$deleteThemeQuery = "DELETE FROM themes WHERE idTh = '$idTheme'";
+$result = $conn->query($deleteThemeQuery);
+
+if ($result) {
+    echo "<script>alert('Le thème a été supprimé avec succès.')</script>";
+} else {
+    echo "<script>alert('Erreur lors de la suppression du thème. Veuillez réessayer.')</script>";
+}
+}
+
+
 ?>
 
 
@@ -165,6 +185,11 @@ if(isset($_POST['submitTheme'])){
                 <li>
                     <a href="#">
                         <div class="sidebar--item" onclick="afficherFormulaireAjoutTheme()">Ajouter Theme</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="sidebar--item" onclick="supprimerFormulaireTheme()">Supprimer Theme</div>
                     </a>
                 </li>
             </ul>
@@ -308,7 +333,29 @@ function afficherFormulaireModificationCategorie() {
     `;
 }
 
+// ----------------------------------------------FormulaireSuprimerTheme------------------------------------
 
+function supprimerFormulaireTheme(){
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+    <div class="close-button" onclick="fermerFormulaireSupprimerFormulaireTheme()">X</div>
+        <h2>Supprimer Theme</h2>
+        <form method="POST">
+            <label for="idthemeSuppression">Sélectionnez leTheme à supprimer :</label>
+            <select id="idthemeSuppression" name="idthemeSuppression" class="form-control" required>
+                <?php
+
+                $themesQuery = $conn->query("SELECT * FROM themes");
+
+                while ($theme = $themesQuery->fetch_assoc()) {
+                    echo "<option value='{$theme['idTh']}'>{$theme['nomTh']}</option>";
+                }
+                ?>
+            </select><br>
+            <button id="bttn" type="submit" name="submitSuppressiontheme">Supprimer</button>
+        </form>
+        `;
+}
 //****************************************************************************************************************** */
 
 function fermerFormulaireModificationCategorie() {
@@ -330,6 +377,11 @@ function fermerFormulaireAjoutPlante() {
 
 
 function fermerFormulaireAjoutCategorie() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = ""; 
+}
+
+function fermerFormulaireSupprimerFormulaireTheme() {
     var formContainer = document.getElementById("formContainer");
     formContainer.innerHTML = ""; 
 }
