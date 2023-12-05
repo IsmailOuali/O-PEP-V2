@@ -55,7 +55,7 @@ if (isset($_POST['submitSuppressionPlante'])) {
     $queryPlante = "DELETE FROM plantes WHERE idPlante = '$idPlanteSuppression'";
     $resultPlante = $conn->query($queryPlante);
 
-    if ($result) {
+    if ($resultPlante) {
         echo "<script>alert('Plante supprimée avec succès.')</script>";
     } else {
         echo "<script>alert('Erreur lors de la suppression de la plante. Veuillez réessayer.')</script>";
@@ -88,35 +88,22 @@ if(isset($_POST['submitTheme'])){
     $descriptionTheme = $_POST['descriptionTheme'];
     $imageTheme = $_POST['imageTheme'];
     
-    // Vérifier le type de $_POST['tags']
     if (is_array($_POST['tags'])) {
-        // Si c'est un tableau, peut-être que vous voudrez le traiter de manière appropriée
-        // Peut-être concaténer les éléments du tableau en une seule chaîne, ou choisir une autre approche
         $tags = implode(',', $_POST['tags']);
     } else {
         $tags = $_POST['tags'];
     }
 
-    //inserer dans la table themes
     $insertThemeQuery = "INSERT INTO themes (nomTh, descriptionTh, imageTh) VALUES ('$nomTheme', '$descriptionTheme', '$imageTheme')";
     $conn->query($insertThemeQuery);
 
-    // Récupérer l'ID du thème inséré
     $idTheme = $conn->insert_id;
-
-    // inserer les tags
     $tagsArray = explode(',', $tags);
     foreach ($tagsArray as $tag) {
         $tag = trim($tag);
-
-        //inserer les tags dans la table tags
         $insertTagQuery = "INSERT INTO tags (nomTag) VALUES ('$tag')";
         $conn->query($insertTagQuery);
-
-        // Récupérer l'ID du tag inséré
         $idTag = $conn->insert_id;
-
-        // Insérer le lien dans la table tags_theme
         $insertLinkQuery = "INSERT INTO tags_theme (idTh, idTag) VALUES ('$idTheme', '$idTag')";
         $conn->query($insertLinkQuery);
     }
@@ -124,14 +111,12 @@ if(isset($_POST['submitTheme'])){
 
 
 //suprimer theme
-
 if (isset($_POST['submitSuppressiontheme'])) {
     $idTheme = $_POST['idthemeSuppression'];
-// Supprimer les enregistrements liés dans tags_theme
+
 $deleteTagsThemeQuery = "DELETE FROM tags_theme WHERE idTh = '$idTheme'";
 $conn->query($deleteTagsThemeQuery);
 
-// Ensuite, supprimer le thème lui-même
 $deleteThemeQuery = "DELETE FROM themes WHERE idTh = '$idTheme'";
 $result = $conn->query($deleteThemeQuery);
 
@@ -140,6 +125,24 @@ if ($result) {
 } else {
     echo "<script>alert('Erreur lors de la suppression du thème. Veuillez réessayer.')</script>";
 }
+}
+
+
+
+// supprimer Article
+if (isset($_POST['submitSuppressionArticle'])) {
+    // echo "<script>alert('hey')</script>";
+     $idArticle = $_POST['idArticleSuppression'];
+    echo "<script>alert('ID de l'article à supprimer : " . $idArticle . "')</script>";
+
+    $deleteArticleQuery = "DELETE FROM articles WHERE idAr = '$idArticle'";
+    $result = $conn->query($deleteArticleQuery);
+
+    if ($result) {
+        echo "<script>alert('L'article a été supprimé avec succès.')</script>";
+    } else {
+        echo "<script>alert('Erreur lors de la suppression de l'article : " . $conn->error . "')</script>";
+    }
 }
 
 
@@ -196,6 +199,11 @@ if ($result) {
                 <li>
                     <a href="#">
                         <div class="sidebar--item" onclick="supprimerFormulaireTheme()">Supprimer Theme</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
                     </a>
                 </li>
             </ul>
@@ -291,6 +299,28 @@ if ($result) {
                 ?>
             </select><br>
             <button id="bttn" type="submit" name="submitSuppressionPlante">Supprimer</button>
+        </form>
+    `;
+}
+// ----------------------------------------------FormulaireSupprimerArticle------------------------------------
+function afficherFormulaireSuppressionArticle() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+        <div class="close-button" onclick="fermerFormulaireSuppressionArticle()">X</div>
+        <h2>Supprimer Article</h2>
+        <form method="POST">
+            <label for="idArticleSuppression">Sélectionnez la article à supprimer :</label>
+            <select id="idArticleSuppression" name="idArticleSuppression" class="form-control" required>
+                <?php
+
+                $articlesQuery = $conn->query("SELECT * FROM articles");
+
+                while ($article = $articlesQuery->fetch_assoc()) {
+                    echo "<option value='{$article['idAr']}'>{$article['nomAr']}</option>";
+                }
+                ?>
+            </select><br>
+            <button id="bttn" type="submit" name="submitSuppressionArticle">Supprimer</button>
         </form>
     `;
 }

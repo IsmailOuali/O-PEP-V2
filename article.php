@@ -93,10 +93,10 @@ if(isset($_POST["save_data"]) ) {
 
 
 
-=======
+
   <div class=" mt-2 ">
     <img class="card-img-top " style="height: 20vw;" src="<?php echo $row[3]?>"
->>>>>>> rabii
+
       alt="Card image cap">
   </div>
 
