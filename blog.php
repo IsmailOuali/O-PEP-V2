@@ -34,11 +34,15 @@ if (isset($_POST['addToCart'])) {
     
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css2/styleBlog.css">
+    <link rel="stylesheet" href="styleBlog.css">
     <title>Document</title>
 </head>
 <style>
-        
+        body {
+        /* background-color: #132A13; */
+        /* color: aliceblue;
+        margin-top: 2rem; */
+    }
 
     .sec1 h1 {
         font-size: 3.5vw;

@@ -1,6 +1,7 @@
 
-<?php 
-include("traitement.php") ;
+
+<?php include("traitement.php"); 
+
 session_start();
 $userId = $_SESSION['idUtl'];
 $reqet="SELECT * FROM panier JOIN plantes ON panier.idPlante = plantes.idPlante WHERE idUtl= $userId";
@@ -31,9 +32,8 @@ if (isset($_POST['addToCart'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css2/styleClient.css">
+    <link rel="stylesheet" href="styleClient.css">
     <title>Document</title>
     <style>
         body {
@@ -215,12 +215,7 @@ if (isset($_POST['addToCart'])) {
                         <li class="nav__item">
                             <a href="blog.php"  style="font-size: 20px;">Blog</a>
                         </li>
-                        <!-- shopping cart -->
-                        <li>
-                          <a href="panier.php" style="cursor: pointer;">
-                            <i class="ri-shopping-bag-line" style="font-size:27px;"></i>
-                        </a>
-                      </li>
+
                          <!-- log out -->
                         <li>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
@@ -268,7 +263,7 @@ if (isset($_POST['addToCart'])) {
     <!-- ... ________________ ... -->
     <section class="sec2 d-flex justify-content-center mt-5">
         <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border:1px solid white; border-radius:20px; width:40%;">
-            <div class="container-fluid "style="dispaly:flex; gap:1.3vw">
+            <div class="container-fluid "style="dispaly:flex; flex-between">
                 <form method="get" action="" class="d-flex justify-content-center" role="search">
                     <a class="navbar-brand" href="?view_all" style="color:white">View All</a>
 
@@ -283,12 +278,14 @@ if (isset($_POST['addToCart'])) {
                         }
                         ?>
                     </select>
-                    <form method="get" class="d-flex justify-content-center"style="gap:1px">
-                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" id="searchInput" style="height: 40px;">
-                    <button class=" searchbtn btn-success"name="search_but" type="sumbit" style=" border-radius: 0 40px  40px 0; height:40px">GO</button>
-                    </form>
+
                     </div>
                 </form>
+                <form method="get" class="d-flex justify-content-center"style="margin-left:50px">
+                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" id="searchInput" style="height: 40px;">
+                    <button class=" searchbtn btn-success"name="search_but" type="sumbit" style=" border-radius: 0 40px  40px 0; height:40px">GO</button>
+                </form>
+
             </div>
         </nav>
     </section>
@@ -393,10 +390,6 @@ if (isset($_POST['addToCart'])) {
     }
     </script>
     
-
-
-    
-   
 </body>
 </html>
 
