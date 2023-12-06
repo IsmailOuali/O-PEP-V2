@@ -334,6 +334,42 @@ function afficherFormulaireModificationCategorie() {
     `;
 }
 
+ // ----------------------------------------------FormulaireModifierTheme------------------------------------
+
+
+ function afficherFormulaireAModifTheme() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+        <div class="close-button" onclick="fermerFormulaireModifTheme()">X</div>
+        <h2>Modifier Theme</h2>
+        <form method="POST" onsubmit="modifTheme(); return false;">
+        <label for="idthemeSuppression">Sélectionnez leTheme à supprimer :</label>
+            <select id="idthemeSuppression" name="idthemeSuppression" class="form-control" required>
+                <?php
+
+                $themesQuery = $conn->query("SELECT * FROM themes");
+
+                while ($theme = $themesQuery->fetch_assoc()) {
+                    echo "<option value='{$theme['idTh']}'>{$theme['nomTh']}</option>";
+                }
+                ?>
+            </select><br>
+            <label for="nomTheme"> Nauveau Nom de Theme:</label>
+            <input type="text" id="nomTheme" name="nomTheme"><br>
+            <label for="descriptionTheme"> Nauveau Description de Theme:</label>
+            <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
+            <label for="imageTheme">Nauveau  Image de Theme:</label>
+            <input type="file" accept="plantes/jpg, plantes/png" id="imageTheme" name="imageTheme"><br>
+            <label for="tags"> Nauveau  Tags (séparés par des virgules):</label>
+            <input type="text" id="tags" name="tags"><br>
+            <button type="submit" name="submitTheme">Ajouter</button>
+        </form>
+    `;
+}
+
+
+
+
 // ----------------------------------------------FormulaireSuprimerTheme------------------------------------
 
 function supprimerFormulaireTheme(){
