@@ -206,15 +206,20 @@ if (isset($_POST['submitSuppressionArticle'])) {
                         <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
                     </a>
                 </li>
+                <li>
+                    <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireModificationTheme()">Modifier Theme</div>
+                    </a>
+                </li>
             </ul>
-            <ul class="sidebar--bottom--items">
+            <!-- <ul class="sidebar--bottom--items">
                 <li>
                     <a href="connection.php">
                         <span class="icon"><i class="ri-logout-box-r-line"></i></span>
                         <div class="sidebar--item">Logout</div>
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
         <div class="main--container">
             <div class="form-container" id="formContainer">
@@ -326,29 +331,62 @@ function afficherFormulaireSuppressionArticle() {
 }
 
 // ----------------------------------------------FormulaireModiferCategorie------------------------------------
-function afficherFormulaireModificationCategorie() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = `
-        <div class="close-button" onclick="fermerFormulaireModificationCategorie()">X</div>
-        <h2>Modifier Catégorie</h2>
-        <form method="POST">
-            <label for="idCategorieModification">Sélectionnez la catégorie à modifier :</label>
-            <select id="idCategorieModification" name="idCategorieModification" class="form-control" required>
-                <?php
-                // Récupérer les catégories depuis la base de données
-                $categoriesQuery = $conn->query("SELECT * FROM categories");
+function afficherFormulaireModificationTheme() {
+        var formContainer = document.getElementById("formContainer");
 
-                while ($categorie = $categoriesQuery->fetch_assoc()) {
-                    echo "<option value='{$categorie['idCategorie']}'>{$categorie['nomCategorie']}</option>";
-                }
-                ?>
-            </select><br>
-            <label for="nouveauNomCategorie">Nouveau nom de la catégorie :</label>
-            <input type="text" id="nouveauNomCategorie" name="nouveauNomCategorie" class="form-control" required><br>
-            <button type="submit" name="submitModificationCategorie">Modifier</button>
-        </form>
-    `;
-}
+        // Fonction pour afficher le nom du thème sélectionné
+        function afficherChampSelectionne() {
+            var selectElement = document.getElementById("idThemeModification");
+            var selectedTheme = selectElement.options[selectElement.selectedIndex].text;
+
+            // Afficher le nom du thème sélectionné
+            document.getElementById("affichageChamp").innerText = "Thème sélectionné : " + selectedTheme;
+        }
+
+        formContainer.innerHTML = `
+            <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
+            <h2>Modifier Theme</h2>
+            <form method="POST" onsubmit="submitModificationTheme()">
+                <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
+                <select id="idThemeModification" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
+                    <?php
+                    // Récupérer les catégories depuis la base de données
+                    $ThemesQuery = $conn->query("SELECT * FROM themes");
+
+                    while ($Theme = $ThemesQuery->fetch_assoc()) {
+                        echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
+                    }
+                    ?>
+                </select><br>
+                <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
+                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
+                <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
+                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
+                <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
+                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
+                <h3>Tags</h3>
+                <p id="affichageChamp"></p>
+                <button type="submit" name="submitModificationTheme">Modifier</button>
+            </form>
+        `;
+    }
+
+    function fermerFormulaireModificationTheme() {
+        var formContainer = document.getElementById("formContainer");
+        formContainer.innerHTML = "";
+    }
+
+    function afficherChampSelectionne() {
+        // Récupérer la valeur sélectionnée de la liste déroulante
+        var champSelectionne = document.getElementById("champSelectionne").value;
+
+        // Afficher la valeur sélectionnée
+        document.getElementById("affichageChamp").innerText = "Champ sélectionné : " + champSelectionne;
+    }
+
+
+
+
     // ----------------------------------------------FormulaireAjoutTheme------------------------------------
     function afficherFormulaireAjoutTheme() {
     var formContainer = document.getElementById("formContainer");
@@ -369,7 +407,7 @@ function afficherFormulaireModificationCategorie() {
     `;
 }
 
-// ----------------------------------------------FormulaireSuprimerTheme------------------------------------
+// ----------------------------------------------FormulaireSupprimerTheme------------------------------------
 
 function supprimerFormulaireTheme(){
     var formContainer = document.getElementById("formContainer");
