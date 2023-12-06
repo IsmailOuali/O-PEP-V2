@@ -132,7 +132,7 @@ $conn->query($deleteTagsThemeQuery);
 $deleteThemeQuery = "DELETE FROM themes WHERE idTh = '$idTheme'";
 $result = $conn->query($deleteThemeQuery);
 
-if ($result!== false) {
+if ($result != false) {
     
     echo "<script>alert('Le thème a été supprimé avec succès.')</script>";
     echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
@@ -346,25 +346,15 @@ function afficherFormulaireSuppressionArticle() {
     `;
 }
 
-// ----------------------------------------------FormulaireModiferCategorie------------------------------------
+// ----------------------------------------------FormulaireModiferTheme------------------------------------
 function afficherFormulaireModificationTheme() {
         var formContainer = document.getElementById("formContainer");
-
-        // Fonction pour afficher le nom du thème sélectionné
-        function afficherChampSelectionne() {
-            var selectElement = document.getElementById("idThemeModification");
-            var selectedTheme = selectElement.options[selectElement.selectedIndex].text;
-
-            // Afficher le nom du thème sélectionné
-            document.getElementById("affichageChamp").innerText = "Thème sélectionné : " + selectedTheme;
-        }
-
         formContainer.innerHTML = `
             <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
             <h2>Modifier Theme</h2>
             <form method="POST" onsubmit="submitModificationTheme()">
                 <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
-                <select id="idThemeModification" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
+                <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
                     <?php
                     // Récupérer les catégories depuis la base de données
                     $ThemesQuery = $conn->query("SELECT * FROM themes");
@@ -387,17 +377,13 @@ function afficherFormulaireModificationTheme() {
         `;
     }
 
-    function fermerFormulaireModificationTheme() {
-        var formContainer = document.getElementById("formContainer");
-        formContainer.innerHTML = "";
-    }
-
     function afficherChampSelectionne() {
         // Récupérer la valeur sélectionnée de la liste déroulante
         var champSelectionne = document.getElementById("champSelectionne").value;
 
         // Afficher la valeur sélectionnée
         document.getElementById("affichageChamp").innerText = "Champ sélectionné : " + champSelectionne;
+        
     }
 
 
@@ -475,6 +461,11 @@ function fermerFormulaireSupprimerFormulaireTheme() {
     var formContainer = document.getElementById("formContainer");
     formContainer.innerHTML = ""; 
 }
+
+function fermerFormulaireModificationTheme() {
+        var formContainer = document.getElementById("formContainer");
+        formContainer.innerHTML = "";
+    }
 
 </script>
 
