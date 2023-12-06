@@ -81,6 +81,31 @@ if (isset($_POST['submitModificationCategorie'])) {
 
 
 
+//ModifierTheme
+
+if (isset($_POST['submitModificationTheme'])) {
+    
+    $idThemeModification = $_POST['idThemeModification'];   
+    $nouveauNomTheme = $_POST['nouveauNomTheme'];
+    $nouveaudescriptionTheme=$_POST['nouveaudescriptionTheme'];
+    $nouveauimageTheme =$_POST['nouveauimageTheme'];
+    //$nouveautags=$_POST['nouveautags'];
+
+    $query = "UPDATE themes SET nomTh= '$nouveauNomTheme', descriptionTh = '$nouveaudescriptionTheme' , imageTh=' $nouveauimageTheme' WHERE idTh = '$idThemeModification'  ";
+    $result = $conn->query($query);
+
+    if ($result) {
+        echo "<script>alert('Theme modifiée avec succès.')</script>";
+    } else {
+        echo "<script>alert('Erreur lors de la modification de le Theme. Veuillez réessayer.')</script>";
+    }
+}
+
+
+
+
+
+
 //ajouter theme
 if(isset($_POST['submitTheme'])){
 
@@ -198,14 +223,19 @@ if (isset($_POST['submitSuppressionArticle'])) {
                 </li>
                 <li>
                     <a href="#">
-                        <div class="sidebar--item" onclick="supprimerFormulaireTheme()">Supprimer Theme</div>
+                        <div class="sidebar--item" onclick="afficherFormulaireModifTheme()">Modifier Theme</div>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
+                        <div class="sidebar--item" onclick="supprimerFormulaireTheme()">Supprimer Theme</div>
                     </a>
                 </li>
+                <!-- <li> 
+                    <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
+                    </a>
+                </li>-->
             </ul>
             <ul class="sidebar--bottom--items">
                 <li>
@@ -372,16 +402,16 @@ function afficherFormulaireModificationCategorie() {
  // ----------------------------------------------FormulaireModifierTheme------------------------------------
 
 
- function afficherFormulaireAModifTheme() {
+ function afficherFormulaireModifTheme() {
     var formContainer = document.getElementById("formContainer");
     formContainer.innerHTML = `
         <div class="close-button" onclick="fermerFormulaireModifTheme()">X</div>
         <h2>Modifier Theme</h2>
         <form method="POST" onsubmit="modifTheme(); return false;">
-        <label for="idthemeSuppression">Sélectionnez le Theme à ;odifier :</label>
-            <select id="idthemeSuppression" name="idthemeSuppression" class="form-control" required>
-                <?php
+        <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
+        <select onchange="afficherSelect()" id="idThemeModification" name="idThemeModification" class="form-control" required>
 
+                <?php
                 $themesQuery = $conn->query("SELECT * FROM themes");
 
                 while ($theme = $themesQuery->fetch_assoc()) {
@@ -389,17 +419,24 @@ function afficherFormulaireModificationCategorie() {
                 }
                 ?>
             </select><br>
-            <label for="nomTheme"> Nauveau Nom de Theme:</label>
-            <input type="text" id="nomTheme" name="nomTheme"><br>
-            <label for="descriptionTheme"> Nauveau Description de Theme:</label>
-            <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
-            <label for="imageTheme">Nauveau  Image de Theme:</label>
-            <input type="file" accept="plantes/jpg, plantes/png" id="imageTheme" name="imageTheme"><br>
-            <label for="tags"> Nauveau  Tags (séparés par des virgules):</label>
-            <input type="text" id="tags" name="tags"><br>
-            <button type="submit" name="submitTheme">Ajouter</button>
+            <label for="nouveauNomTheme"> Nauveau Nom de Theme:</label>
+            <input type="text" id="nouveauNomTheme" name="nouveauNomTheme"><br>
+
+            <label for="nouveaudescriptionTheme"> Nauveau Description de Theme:</label>
+            <input type="text" id="nouveaudescriptionTheme" name="nouveaudescriptionTheme"><br>
+
+            <label for="nouveauimageTheme">Nauveau  Image de Theme:</label>
+            <input type="file" accept="plantes/jpg, plantes/png" id="nouveauimageTheme" name="nouveauimageTheme"><br>
+            <h3>Tags :</h3>
+          
+            <p id="afficheChamp"></p>
+            <button type="submit" name="submitModificationTheme">Modifier</button>
         </form>
     `;
+    function afficherSelect(){
+        var idChampSelectionner=document.getElementById("idThemeModification").value;
+        document.getElementById("afficheChamp").innerText="champ selectionné:" + idChampSelectionner;
+    }
 }
 
 
@@ -454,6 +491,10 @@ function fermerFormulaireAjoutCategorie() {
 }
 
 function fermerFormulaireSupprimerFormulaireTheme() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = ""; 
+}
+function fermerFormulaireModifTheme(){
     var formContainer = document.getElementById("formContainer");
     formContainer.innerHTML = ""; 
 }
