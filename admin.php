@@ -361,7 +361,7 @@ function afficherFormulaireModificationCategorie() {
             <label for="descriptionTheme">Description de Theme:</label>
             <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
             <label for="imageTheme">Image de Theme:</label>
-            <input type="text" id="imageTheme" name="imageTheme"><br>
+            <input type="file" id="imageTheme" name="imageTheme"><br>
             <label for="tags">Tags (séparés par des virgules):</label>
             <input type="text" id="tags" name="tags"><br>
             <button type="submit" name="submitTheme">Ajouter</button>
