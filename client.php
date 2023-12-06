@@ -365,6 +365,7 @@ if (isset($_POST['addToCart'])) {
             ?>
         </div>
 
+
         <!-- ... (Pagination) ... -->
 
         <?php
@@ -381,6 +382,7 @@ if (isset($_POST['addToCart'])) {
         echo '</nav>';
         ?>
     </section>
+
     <script>
     function submitForm() {
         document.getElementById('categorieSelect').form.submit();
