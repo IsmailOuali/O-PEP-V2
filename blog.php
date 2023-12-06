@@ -224,6 +224,7 @@ if (isset($_POST['addToCart'])) {
         $themeTitle = $theme['nomTh'];
         $themeDescription = $theme['descriptionTh'];
         $themeImage = $theme['imageTh'];
+        $idth= $theme['idTh'];
         ?>
 
         <section class="sec1 d-flex" style="width: 100%;">
@@ -236,7 +237,7 @@ if (isset($_POST['addToCart'])) {
                     <p><?php echo $themeDescription; ?></p>
                 </div>
                 <div class="division12" style=" margin-top:40px">
-                    <a href="#" style="text-decoration: none;">
+                    <a href="./article.php?id=<?php echo $idth; ?>" style="text-decoration: none;">
                         <table>
                             <tr>
                                 <td style=" border: 1px solid black;  padding: 10px; width:35vw ; gap:50px"  class="d-flex" >
@@ -244,7 +245,7 @@ if (isset($_POST['addToCart'])) {
                                     <div class="d-flex flex-column">
                                         <h3 style="color: black;">Tout sur... <?php echo $themeTitle; ?></h3>
                                         <div class="d-flex" style=" align-items: center; gap:10px">
-                                            <a href="#" style="color: black; " style="text-decoration: none;">En savoir plus</a>
+                                        <a href="./article.php?id=<?php echo $idth; ?>" name="idth" style="color: black; text-decoration: none;">En savoir plus</a>
                                             <svg width="14" height="12" viewBox="0 0 14 12" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M-4.97198e-07 6.77851L11.0896 6.77851L7.06538 10.8992L8.14044 12L14 6L8.14044
                                                 4.41415e-07L7.06538 1.10082L11.0896 5.22149L-3.61078e-07 5.22149L-4.97198e-07 6.77851Z">
