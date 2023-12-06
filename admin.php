@@ -17,6 +17,7 @@ if (isset($_POST['submitPlante'])) {
 
     if ($result) {
         echo "<script>alert('Plante ajoutée avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de l'ajout de la plante. Veuillez réessayer.')</script>";
     }
@@ -36,6 +37,7 @@ if (isset($_POST['submitCategorie'])) {
 
         if ($result) {
             echo "<script>alert('Catégorie ajoutée avec succès.')</script>";
+            echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
         } else {
             echo "<script>alert('Erreur lors de l'ajout de la catégorie. Veuillez réessayer.')</script>";
         }
@@ -57,6 +59,7 @@ if (isset($_POST['submitSuppressionPlante'])) {
 
     if ($resultPlante) {
         echo "<script>alert('Plante supprimée avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de la suppression de la plante. Veuillez réessayer.')</script>";
     }
@@ -74,6 +77,7 @@ if (isset($_POST['submitModificationCategorie'])) {
 
     if ($result) {
         echo "<script>alert('Catégorie modifiée avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de la modification de la catégorie. Veuillez réessayer.')</script>";
     }
@@ -82,12 +86,12 @@ if (isset($_POST['submitModificationCategorie'])) {
 
 
 //ajouter theme
-if(isset($_POST['submitTheme'])){
-
+// Ajouter un thème
+if (isset($_POST['submitTheme'])) {
     $nomTheme = $_POST['nomTheme'];
     $descriptionTheme = $_POST['descriptionTheme'];
     $imageTheme = $_POST['imageTheme'];
-    
+
     if (is_array($_POST['tags'])) {
         $tags = implode(',', $_POST['tags']);
     } else {
@@ -95,7 +99,7 @@ if(isset($_POST['submitTheme'])){
     }
 
     $insertThemeQuery = "INSERT INTO themes (nomTh, descriptionTh, imageTh) VALUES ('$nomTheme', '$descriptionTheme', '$imageTheme')";
-    $conn->query($insertThemeQuery);
+    $result = $conn->query($insertThemeQuery);
 
     $idTheme = $conn->insert_id;
     $tagsArray = explode(',', $tags);
@@ -105,9 +109,17 @@ if(isset($_POST['submitTheme'])){
         $conn->query($insertTagQuery);
         $idTag = $conn->insert_id;
         $insertLinkQuery = "INSERT INTO tags_theme (idTh, idTag) VALUES ('$idTheme', '$idTag')";
-        $conn->query($insertLinkQuery);
+        $result2 = $conn->query($insertLinkQuery);
+    }
+
+    if ($result2 && $result) {
+        echo "<script>alert('Le thème a été ajouté avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
+    } else {
+        echo "<script>alert('Erreur lors de l'ajout du thème : " . $conn->error . "')</script>";
     }
 }
+
 
 
 //suprimer theme
@@ -120,8 +132,11 @@ $conn->query($deleteTagsThemeQuery);
 $deleteThemeQuery = "DELETE FROM themes WHERE idTh = '$idTheme'";
 $result = $conn->query($deleteThemeQuery);
 
-if ($result) {
+if ($result!== false) {
+    
     echo "<script>alert('Le thème a été supprimé avec succès.')</script>";
+    echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
+    
 } else {
     echo "<script>alert('Erreur lors de la suppression du thème. Veuillez réessayer.')</script>";
 }
@@ -131,7 +146,7 @@ if ($result) {
 
 // supprimer Article
 if (isset($_POST['submitSuppressionArticle'])) {
-    // echo "<script>alert('hey')</script>";
+
      $idArticle = $_POST['idArticleSuppression'];
     echo "<script>alert('ID de l'article à supprimer : " . $idArticle . "')</script>";
 
@@ -140,6 +155,7 @@ if (isset($_POST['submitSuppressionArticle'])) {
 
     if ($result) {
         echo "<script>alert('L'article a été supprimé avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de la suppression de l'article : " . $conn->error . "')</script>";
     }
