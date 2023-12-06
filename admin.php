@@ -343,7 +343,7 @@ function afficherFormulaireModificationCategorie() {
         <div class="close-button" onclick="fermerFormulaireModifTheme()">X</div>
         <h2>Modifier Theme</h2>
         <form method="POST" onsubmit="modifTheme(); return false;">
-        <label for="idthemeSuppression">Sélectionnez leTheme à supprimer :</label>
+        <label for="idthemeSuppression">Sélectionnez le Theme à ;odifier :</label>
             <select id="idthemeSuppression" name="idthemeSuppression" class="form-control" required>
                 <?php
 
