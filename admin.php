@@ -264,7 +264,7 @@ if (isset($_POST['submitSuppressionArticle'])) {
                 <label for="nomPlante">Nom de la Plante:</label>
                 <input type="text" id="nomPlante" name="nomPlante" required><br>
                 <label for="imagePlante">Image de la Plante (URL):</label>
-                <input type="text" id="imagePlante" name="imagePlante" required><br>
+                <input type="file" id="imagePlante" name="imagePlante" required><br>
 
                 <label for="descriptionPlante">Description:</label>
                 <textarea id="descriptionPlante" name="descriptionPlante" required></textarea><br>
@@ -377,7 +377,7 @@ function afficherFormulaireModificationCategorie() {
             <label for="descriptionTheme">Description de Theme:</label>
             <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
             <label for="imageTheme">Image de Theme:</label>
-            <input type="text" id="imageTheme" name="imageTheme"><br>
+            <input type="file" id="imageTheme" name="imageTheme"><br>
             <label for="tags">Tags (séparés par des virgules):</label>
             <input type="text" id="tags" name="tags"><br>
             <button type="submit" name="submitTheme">Ajouter</button>
