@@ -254,7 +254,7 @@ if ($result) {
                 <label for="nomPlante">Nom de la Plante:</label>
                 <input type="text" id="nomPlante" name="nomPlante" required><br>
                 <label for="imagePlante">Image de la Plante (URL):</label>
-                <input type="text" id="imagePlante" name="imagePlante" required><br>
+                <input type="file" id="imagePlante" name="imagePlante" required><br>
 
                 <label for="descriptionPlante">Description:</label>
                 <textarea id="descriptionPlante" name="descriptionPlante" required></textarea><br>
