@@ -43,7 +43,6 @@ if (isset($_POST["save_data"])) {
       }
   } 
 }
-// .........................................rechercher...............................................
 
 
 ?>
@@ -52,7 +51,11 @@ if (isset($_POST["save_data"])) {
 
 
 <style>
-
+        body {
+        /* background-color: #132A13; */
+        /* color: aliceblue;
+        margin-top: 2rem; */
+    }
 
     .sec1 h1 {
         font-size: 3.5vw;
@@ -332,8 +335,6 @@ if (isset($_POST["save_data"])) {
                 </div>
             </div>
         </div>
-
-      </div>
     </div>
 </div>
 <div class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
@@ -342,7 +343,6 @@ if (isset($_POST["save_data"])) {
   $result=mysqli_query($conn,$reqarticle);
   while($row=mysqli_fetch_row($result)) {
    $_SESSION['idAr']=$row[0];
-  }
   ?>
 <div class="card mb-4 col- "style="width:25%">
 
@@ -384,48 +384,12 @@ if (isset($_POST["save_data"])) {
 
 </div>
 
+ 
 
-
-<section class=" Recherch w-100 mt-3">
-  <div class="w-100 row gap-2 justify-content-center ">
-    <?php
-    // $reqarticle="select * from articles where idTh=$idth and idUtl=$idUser";
-    $reqarticle = "select * from articles where idTh=$idth ";
-    $result = mysqli_query($conn, $reqarticle);
-    while ($row = mysqli_fetch_row($result)) {
-
-    ?>
-
-
-      <div class="card mb-4 col- " style="width:30%">
-
-
-
-
-
-        <div class=" mt-2 ">
-          <img class="card-img-top " style="height: 20vw;" src="<?php echo $row[3] ?>" alt="Card image cap">
-        </div>
-
-
-        <div class="card-body">
-
-
-          <h4 class="card-title"><?php echo $row[1] ?></h4>
-          <span class="mask rgba-white-slight text-success"><?php echo $row[4] ?></span>
-          <p class="card-text"><?php echo $row[2] ?></p>
-          <button type="button" class="btn btn-light-blue btn-md">Read more</button>
-
-        </div>
-
-      </div>
-
-
-
-    <?php
-    }
-    ?>
-
+<?php 
+  }
+  ?>
+  
 </section>
 <!------------------------- Pagination ----------------------->
 <div class="pagination  d-flex justify-content-center">
