@@ -2,27 +2,6 @@
 
 session_start();
 $userId = $_SESSION['idUtl'];
-$reqet="SELECT * FROM panier JOIN plantes ON panier.idPlante = plantes.idPlante WHERE idUtl= $userId";
-$result2 = $conn->query($reqet);
-$count = mysqli_num_rows($result2);
-
-if (isset($_POST['addToCart'])) {
-    
-    $plantId = $_POST['addToCart'];
-
-    $insertQuery = "INSERT INTO panier (idUtl, idPlante, quantite) VALUES ('$userId','$plantId',1)";
-    $result = $conn->query($insertQuery);
-   
-    if ($result) {
-        // rje3 l page li 9bel
-        header('location:' . $_SERVER['HTTP_REFERER']);
-        exit;
-    } else {
-        echo "<script>alert('erreur d'ajout')</script>";
-    }
-}
-
-
 ?>
 
 
@@ -38,11 +17,7 @@ if (isset($_POST['addToCart'])) {
     <title>Document</title>
 </head>
 <style>
-        body {
-        /* background-color: #132A13; */
-        /* color: aliceblue;
-        margin-top: 2rem; */
-    }
+       
 
     .sec1 h1 {
         font-size: 3.5vw;
@@ -196,14 +171,7 @@ if (isset($_POST['addToCart'])) {
                         </a>
                         </form>
                       </li>
-                      <li >
-                    <a href="panier.php" class="d-flex">
-                        <svg xmlns="http://www.w3.org/2000/svg"  width="30" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                        </svg>
-                        <p class=" count"><?php echo $count ?></p>
-                    </a> 
-                      </li>
+
                     </ul>  
 
                     <!-- <div class="logo" style="height: 40px;display: flex;justify-content: space-between; padding:40px ; margin-top:0px; color:black"></div> -->
@@ -217,15 +185,16 @@ if (isset($_POST['addToCart'])) {
     // Sélectionner tous les thèmes depuis la base de données
     $selectThemesQuery = "SELECT * FROM themes";
     $themesResult = $conn->query($selectThemesQuery);
+    
 
+    
     if ($themesResult->num_rows > 0) {
-    // Boucle à travers chaque thème
-    while ($theme = $themesResult->fetch_assoc()) {
-        $themeTitle = $theme['nomTh'];
-        $themeDescription = $theme['descriptionTh'];
-        $themeImage = $theme['imageTh'];
-        $idth= $theme['idTh'];
-        ?>
+        while ($theme = $themesResult->fetch_assoc()) {
+            $themeTitle = $theme['nomTh'];
+            $themeDescription = $theme['descriptionTh'];
+            $themeImage = $theme['imageTh'];
+            $idth = $theme['idTh'];
+            ?>
 
         <section class="sec1 d-flex" style="width: 100%;">
             <div class="division1" style="width: 42%">
