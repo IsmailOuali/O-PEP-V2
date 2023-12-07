@@ -296,6 +296,11 @@ if (isset($_POST["save_data"])) {
 <!-- --------------------------------------------------fin-------------------------------------------------------- -->
 
 <section class="w-100 " style="margin-top: 150px;" >
+<div class="w-75 input-group rounded mx-auto my-3">
+<form class="w-50 input-group rounded mx-auto md-form form-sm" method="post" action="">
+  <input class="form-control border border-success form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" id="Search" name="keyword">
+</form>
+</div>
 <div class="barre d-flex justify-content-center align-items-center gap-5">
   <!-- ------------tags------------------- -->
   <div class="tags d-flex gap-3">
@@ -386,7 +391,7 @@ if (isset($_POST["save_data"])) {
   ?>
   
 </section>
-
+<!------------------------- Pagination ----------------------->
 <div class="pagination  d-flex justify-content-center">
   <?php
   $pagination = 0;
@@ -418,6 +423,41 @@ if (isset($_POST["save_data"])) {
 <?php include './include/footer.php' ?>
 <script>
   let section = document.querySelector('.test');
+  var Search = document.getElementById("Search");
+  //affichage
+  
+    function fetchArticle() {
+      let section = document.querySelector('.test');
+      let XML = new XMLHttpRequest();
+  
+      XML.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          section.innerHTML = this.responseText;
+        }
+      };
+  
+      XML.open('GET', 'dataarticle.php?idTh=<?php echo $idth ?>');
+      XML.send();
+    }
+
+  Search.addEventListener("input", function() {
+    let s = Search.value;
+    if (s === '') {
+    fetchArticle();
+    } else {
+
+      let XML = new XMLHttpRequest();
+      XML.onreadystatechange = function() {
+        if (this.status == 200) {
+
+          section.innerHTML = this.responseText;
+        }
+      }
+
+      XML.open('GET', 'seachajax.php?search=' + s + '&idTh=<?php echo $idth ?>');
+      XML.send();
+    }
+  });
   var pagebutton = document.querySelectorAll('.page');
   pagebutton.forEach(BTNNM => {
     BTNNM.addEventListener("click", function() {
