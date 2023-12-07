@@ -17,6 +17,7 @@ if (isset($_POST['submitPlante'])) {
 
     if ($result) {
         echo "<script>alert('Plante ajoutée avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de l'ajout de la plante. Veuillez réessayer.')</script>";
     }
@@ -36,6 +37,7 @@ if (isset($_POST['submitCategorie'])) {
 
         if ($result) {
             echo "<script>alert('Catégorie ajoutée avec succès.')</script>";
+            echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
         } else {
             echo "<script>alert('Erreur lors de l'ajout de la catégorie. Veuillez réessayer.')</script>";
         }
@@ -57,6 +59,7 @@ if (isset($_POST['submitSuppressionPlante'])) {
 
     if ($resultPlante) {
         echo "<script>alert('Plante supprimée avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de la suppression de la plante. Veuillez réessayer.')</script>";
     }
@@ -74,6 +77,7 @@ if (isset($_POST['submitModificationCategorie'])) {
 
     if ($result) {
         echo "<script>alert('Catégorie modifiée avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de la modification de la catégorie. Veuillez réessayer.')</script>";
     }
@@ -82,12 +86,12 @@ if (isset($_POST['submitModificationCategorie'])) {
 
 
 //ajouter theme
-if(isset($_POST['submitTheme'])){
-
+// Ajouter un thème
+if (isset($_POST['submitTheme'])) {
     $nomTheme = $_POST['nomTheme'];
     $descriptionTheme = $_POST['descriptionTheme'];
     $imageTheme = $_POST['imageTheme'];
-    
+
     if (is_array($_POST['tags'])) {
         $tags = implode(',', $_POST['tags']);
     } else {
@@ -95,7 +99,7 @@ if(isset($_POST['submitTheme'])){
     }
 
     $insertThemeQuery = "INSERT INTO themes (nomTh, descriptionTh, imageTh) VALUES ('$nomTheme', '$descriptionTheme', '$imageTheme')";
-    $conn->query($insertThemeQuery);
+    $result = $conn->query($insertThemeQuery);
 
     $idTheme = $conn->insert_id;
     $tagsArray = explode(',', $tags);
@@ -105,9 +109,17 @@ if(isset($_POST['submitTheme'])){
         $conn->query($insertTagQuery);
         $idTag = $conn->insert_id;
         $insertLinkQuery = "INSERT INTO tags_theme (idTh, idTag) VALUES ('$idTheme', '$idTag')";
-        $conn->query($insertLinkQuery);
+        $result2 = $conn->query($insertLinkQuery);
+    }
+
+    if ($result2 && $result) {
+        echo "<script>alert('Le thème a été ajouté avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
+    } else {
+        echo "<script>alert('Erreur lors de l'ajout du thème : " . $conn->error . "')</script>";
     }
 }
+
 
 
 //suprimer theme
@@ -120,8 +132,11 @@ $conn->query($deleteTagsThemeQuery);
 $deleteThemeQuery = "DELETE FROM themes WHERE idTh = '$idTheme'";
 $result = $conn->query($deleteThemeQuery);
 
-if ($result) {
+if ($result != false) {
+    
     echo "<script>alert('Le thème a été supprimé avec succès.')</script>";
+    echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
+    
 } else {
     echo "<script>alert('Erreur lors de la suppression du thème. Veuillez réessayer.')</script>";
 }
@@ -131,7 +146,7 @@ if ($result) {
 
 // supprimer Article
 if (isset($_POST['submitSuppressionArticle'])) {
-    // echo "<script>alert('hey')</script>";
+
      $idArticle = $_POST['idArticleSuppression'];
     echo "<script>alert('ID de l'article à supprimer : " . $idArticle . "')</script>";
 
@@ -140,6 +155,7 @@ if (isset($_POST['submitSuppressionArticle'])) {
 
     if ($result) {
         echo "<script>alert('L'article a été supprimé avec succès.')</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
     } else {
         echo "<script>alert('Erreur lors de la suppression de l'article : " . $conn->error . "')</script>";
     }
@@ -206,15 +222,20 @@ if (isset($_POST['submitSuppressionArticle'])) {
                         <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
                     </a>
                 </li>
+                <li>
+                    <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireModificationTheme()">Modifier Theme</div>
+                    </a>
+                </li>
             </ul>
-            <ul class="sidebar--bottom--items">
+            <!-- <ul class="sidebar--bottom--items">
                 <li>
                     <a href="connection.php">
                         <span class="icon"><i class="ri-logout-box-r-line"></i></span>
                         <div class="sidebar--item">Logout</div>
                     </a>
                 </li>
-            </ul>
+            </ul> -->
         </div>
         <div class="main--container">
             <div class="form-container" id="formContainer">
@@ -325,30 +346,49 @@ function afficherFormulaireSuppressionArticle() {
     `;
 }
 
-// ----------------------------------------------FormulaireModiferCategorie------------------------------------
-function afficherFormulaireModificationCategorie() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = `
-        <div class="close-button" onclick="fermerFormulaireModificationCategorie()">X</div>
-        <h2>Modifier Catégorie</h2>
-        <form method="POST">
-            <label for="idCategorieModification">Sélectionnez la catégorie à modifier :</label>
-            <select id="idCategorieModification" name="idCategorieModification" class="form-control" required>
-                <?php
-                // Récupérer les catégories depuis la base de données
-                $categoriesQuery = $conn->query("SELECT * FROM categories");
+// ----------------------------------------------FormulaireModiferTheme------------------------------------
+function afficherFormulaireModificationTheme() {
+        var formContainer = document.getElementById("formContainer");
+        formContainer.innerHTML = `
+            <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
+            <h2>Modifier Theme</h2>
+            <form method="POST" onsubmit="submitModificationTheme()">
+                <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
+                <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
+                    <?php
+                    // Récupérer les catégories depuis la base de données
+                    $ThemesQuery = $conn->query("SELECT * FROM themes");
 
-                while ($categorie = $categoriesQuery->fetch_assoc()) {
-                    echo "<option value='{$categorie['idCategorie']}'>{$categorie['nomCategorie']}</option>";
-                }
-                ?>
-            </select><br>
-            <label for="nouveauNomCategorie">Nouveau nom de la catégorie :</label>
-            <input type="text" id="nouveauNomCategorie" name="nouveauNomCategorie" class="form-control" required><br>
-            <button type="submit" name="submitModificationCategorie">Modifier</button>
-        </form>
-    `;
-}
+                    while ($Theme = $ThemesQuery->fetch_assoc()) {
+                        echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
+                    }
+                    ?>
+                </select><br>
+                <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
+                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
+                <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
+                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
+                <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
+                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
+                <h3>Tags</h3>
+                <p id="affichageChamp"></p>
+                <button type="submit" name="submitModificationTheme">Modifier</button>
+            </form>
+        `;
+    }
+
+    function afficherChampSelectionne() {
+        // Récupérer la valeur sélectionnée de la liste déroulante
+        var champSelectionne = document.getElementById("champSelectionne").value;
+
+        // Afficher la valeur sélectionnée
+        document.getElementById("affichageChamp").innerText = "Champ sélectionné : " + champSelectionne;
+        
+    }
+
+
+
+
     // ----------------------------------------------FormulaireAjoutTheme------------------------------------
     function afficherFormulaireAjoutTheme() {
     var formContainer = document.getElementById("formContainer");
@@ -369,7 +409,7 @@ function afficherFormulaireModificationCategorie() {
     `;
 }
 
-// ----------------------------------------------FormulaireSuprimerTheme------------------------------------
+// ----------------------------------------------FormulaireSupprimerTheme------------------------------------
 
 function supprimerFormulaireTheme(){
     var formContainer = document.getElementById("formContainer");
@@ -421,6 +461,11 @@ function fermerFormulaireSupprimerFormulaireTheme() {
     var formContainer = document.getElementById("formContainer");
     formContainer.innerHTML = ""; 
 }
+
+function fermerFormulaireModificationTheme() {
+        var formContainer = document.getElementById("formContainer");
+        formContainer.innerHTML = "";
+    }
 
 </script>
 
