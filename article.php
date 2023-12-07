@@ -34,9 +34,9 @@ if (isset($_POST["save_data"])) {
 
       if ($result) {
 
-          echo "Insertion réussie.";
+       
           echo "<script>alert('Article cree avec succès.')</script>";
-          echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
+          // echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
       } else {
 
           echo "Erreur de creation : " . mysqli_error($conn);
@@ -332,9 +332,9 @@ if (isset($_POST["save_data"])) {
         </div>
     </div>
 </div>
-<div class="w-100 row d-flex justify-content-center gap-5" style="margin-top:40px">
+<div class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
   <?php  
-  $reqarticle="select * from articles where idTh=$idth ";
+  $reqarticle="select * from articles where idTh=$idth LIMIT 6 ";
   $result=mysqli_query($conn,$reqarticle);
   while($row=mysqli_fetch_row($result)) {
    $_SESSION['idAr']=$row[0];
@@ -387,9 +387,61 @@ if (isset($_POST["save_data"])) {
   
 </section>
 
+<div class="pagination  d-flex justify-content-center">
+  <?php
+  $pagination = 0;
+  $page = "SELECT COUNT(idAr) as totalarticle from articles where idTh=$idth";
+  $result = mysqli_query($conn, $page);
+  $row = mysqli_fetch_row($result);
+  $pagination = $row[0];
+
+
+  $totalpage = ceil($pagination / 6);
+  if ($totalpage>1) {
+  ?>
+    <div class="pagination d-flex gap-2 justify-content-center">
+      <?php
+      for ($i = 1; $i <= $totalpage; $i++) {
+      ?>
+        <button class="btn btn-success page" value="<?php echo $i ?>"><?php echo $i ?></button>
+      <?php
+      }
+      ?>
+    </div>
+  <?php
+  }
+ ?>
+</div>
+
 
 
 <?php include './include/footer.php' ?>
+<script>
+  let section = document.querySelector('.test');
+  var pagebutton = document.querySelectorAll('.page');
+  pagebutton.forEach(BTNNM => {
+    BTNNM.addEventListener("click", function() {
+      let pagevalue = this.value;
+      // Search.value="";
 
+
+      let HTTP = new XMLHttpRequest();
+
+      HTTP.onreadystatechange = function() {
+        if (this.status == 200) {
+          section.innerHTML = this.responseText;
+        }
+      }
+      console.log(pagevalue);
+      console.log("theme=<?php echo $idth; ?>");
+      
+
+      HTTP.open('POST', 'pagination.php');
+       HTTP.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      HTTP.send("page=" + pagevalue + '&theme=<?php echo $idth ?>');
+
+    })
+  })
+</script>
 </body>
 </html>
