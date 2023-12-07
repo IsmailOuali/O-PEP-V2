@@ -17,12 +17,7 @@ $userId = $_SESSION['idUtl'];
     <title>Document</title>
 </head>
 <style>
-        body {
-        /* background-color: #132A13; */
-        /* color: aliceblue;
-        margin-top: 2rem; */
-    }
-
+    
     .sec1 h1 {
         font-size: 3.5vw;
         width: 24vw;
