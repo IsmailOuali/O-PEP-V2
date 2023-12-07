@@ -1,21 +1,41 @@
 <?php
 require_once "traitement.php";
 
-if (isset($_POST['idTheme'])) {
-    $idTheme = $_POST['idTheme'];
+// Récupérer tous les thèmes avec leurs tags associés
+$query = "SELECT t.*, GROUP_CONCAT(DISTINCT tg.nomTag ORDER BY tg.nomTag SEPARATOR ', ') AS tags
+          FROM themes t
+          LEFT JOIN tags_theme tt ON t.idTh = tt.idTh
+          LEFT JOIN tags tg ON tt.idTag = tg.idTag
+          GROUP BY t.idTh";
+$result = $conn->query($query);
 
-    // Récupérer les tags associés au thème
-    $query = "SELECT t.nomTag FROM tags_theme tt
-              JOIN tags t ON tt.idTag = t.idTag
-              WHERE tt.idTh = '$idTheme'";
-    $result = $conn->query($query);
+if ($result) {
+    echo "<table border='1'>
+            <tr>
+                <th>ID</th>
+                <th>Nom du Thème</th>
+                <th>Description du Thème</th>
+                <th>Image du Thème</th>
+                <th>Tags</th>
+                <th>Action</th>
+            </tr>";
 
-    $tags = [];
     while ($row = $result->fetch_assoc()) {
-        $tags[] = $row['nomTag'];
+        echo "<tr>
+                <td>{$row['idTh']}</td>
+                <td>{$row['nomTh']}</td>
+                <td>{$row['descriptionTh']}</td>
+                <td>{$row['imageTh']}</td>
+                <td>{$row['tags']}</td>
+                <td>
+                    <button onclick='afficherFormulaireModificationTheme({$row['idTh']})'>Modifier</button>
+                    <button onclick='supprimerTheme({$row['idTh']})'>Supprimer</button>
+                </td>
+            </tr>";
     }
 
-    // Afficher les tags sous forme de chaîne séparée par des virgules
-    echo implode(', ', $tags);
+    echo "</table>";
+} else {
+    echo "Erreur lors de la récupération des thèmes.";
 }
 ?>

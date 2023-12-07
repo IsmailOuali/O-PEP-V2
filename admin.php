@@ -379,11 +379,11 @@ function afficherFormulaireModificationTheme() {
                     ?>
                 </select><br>
                 <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
-                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
+                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" ><br>
                 <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
-                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
+                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" ><br>
                 <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
-                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
+                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" ><br>
                 <h3>Tags</h3>
                 <p id="affichageChamp"></p>
                 <button type="submit" name="submitModificationTheme">Modifier</button>
