@@ -11,8 +11,9 @@ if (isset($_POST['submitInsc'])) {
     $mdp = $_POST["mdpInsc"];
     
     if (!empty($email) && !empty($mdp) && !empty($nom) && !empty($prenom)) {
-        $query = "INSERT INTO utilisateurs ( emailUtl,mdpUtl,nomUtl,prenomUtl) VALUES ('$email','$mdp','$nom','$prenom')";
-        $result = $conn->query($query);
+        $query = "I
+        ";
+        $result = mysqli_query($conn, $query);
         if($result){
             $lastUserId = $conn->insert_id;
             header("Location: role.php?id=$lastUserId");
