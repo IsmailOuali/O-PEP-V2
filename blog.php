@@ -205,9 +205,9 @@ if (isset($_POST['addToCart'])) {
                                 <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
                             </a>
                         </form>
-                      </li>
+                    </li>
 
-                    </ul>  
+                </ul>
 
                 <!-- <div class="logo" style="height: 40px;display: flex;justify-content: space-between; padding:40px ; margin-top:0px; color:black"></div> -->
 
@@ -225,16 +225,16 @@ if (isset($_POST['addToCart'])) {
     // Sélectionner tous les thèmes depuis la base de données
     $selectThemesQuery = "SELECT * FROM themes";
     $themesResult = $conn->query($selectThemesQuery);
-    
 
-    
+
+
     if ($themesResult->num_rows > 0) {
         while ($theme = $themesResult->fetch_assoc()) {
             $themeTitle = $theme['nomTh'];
             $themeDescription = $theme['descriptionTh'];
             $themeImage = $theme['imageTh'];
             $idth = $theme['idTh'];
-            ?>
+    ?>
 
             <section class="sec1 d-flex" style="width: 100%;">
                 <div class="division1" style="width: 42%">
@@ -280,6 +280,4 @@ if (isset($_POST['addToCart'])) {
     ?>
 
 
-</body>
-
-</html>
+    <?php include './include/footer.php' ?>
