@@ -300,17 +300,26 @@ if (isset($_POST["save_data"])) {
   <!-- ------------tags------------------- -->
   <div class="tags d-flex gap-3">
           <?php
-              $req="SELECT nomTag
+              $req="SELECT *
               FROM tags tg
               JOIN tags_theme tgh ON tg.idTag = tgh.idTag
               JOIN themes th ON th.idTh = tgh.idTh
               WHERE th.idTh = $idth";
 
               $result= $conn->query($req);
-              while ($row=$result->fetch_assoc()) {
-                echo '<input type="button"  class="btnTags" value="'.$row['nomTag'].'" name="tag[]">';
-                }           
-            ?>
+              
+              ?>
+              <form action="" method="post">
+                <?php
+                while ($row=$result->fetch_assoc()) {
+                  ?>
+                <input type="submit" value="<?php echo $row['nomTag'] ?>" class="btnTags" name="<?php echo $row['idTag'] ?>">
+
+                <?php
+                
+                }
+                ?>
+                </form>
   </div>
   <!-- ------------add article --------------->
   <div class="" >
@@ -333,7 +342,7 @@ if (isset($_POST["save_data"])) {
     </div>
 </div>
 <div class="w-100 row d-flex justify-content-center gap-5" style="margin-top:40px">
-  <?php  
+  <?php
   $reqarticle="select * from articles where idTh=$idth ";
   $result=mysqli_query($conn,$reqarticle);
   while($row=mysqli_fetch_row($result)) {

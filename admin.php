@@ -2,6 +2,8 @@
 
 require_once "traitement.php";
 
+session_start();
+
 // Ajout de Plante
 if (isset($_POST['submitPlante'])) {
 
