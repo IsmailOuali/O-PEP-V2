@@ -7,7 +7,7 @@ session_start();
 $idUser=$_SESSION['idUtl'];
 
 
-if (isset($_POST["save_data"])) {
+if (isset($_POST['save_data'])) {
   $name = $_POST['namarticle'];
   $desc = mysqli_real_escape_string($conn, $_POST['description_a']);
   date_default_timezone_set("Africa/Casablanca");
