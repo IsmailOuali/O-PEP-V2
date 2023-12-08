@@ -382,7 +382,7 @@ function afficherFormulaireModificationTheme() {
         var champSelectionne = document.getElementById("champSelectionne").value;
 
         // Afficher la valeur sélectionnée
-        document.getElementById("affichageChamp").innerText = "Champ sélectionné : " + champSelectionne;
+        document.getElementById("affichageChamp").innerText = champSelectionne;
         
     }
 
