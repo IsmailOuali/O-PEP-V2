@@ -26,11 +26,7 @@ body {
           
             box-sizing: border-box;
         }
-  img {
-width: 300px;
-height: 200px;
-
-  }
+ 
      
        
   </style>
@@ -50,16 +46,19 @@ height: 200px;
 <body>
 <body>
 
+<div class="bg-white flex justify-center">
+    <div class="mt-10 mx-8" style="width: 50%;">
+        <img style="width: 100%;" src="<?php echo $article['imageAr']; ?>" alt="<?php echo $article['nomAr']; ?>" class="">
+    </div>
+    <div class="flex flex-col" style="width: 50%;">
+        <h1 class="text-2xl font-semibold text-gray-800"><?php echo $article['nomAr']; ?></h1>
+        <p class="text-base text-gray-600 text-left"><?php echo $article['descriptionAr']; ?></p>
+    </div>
+</div>
+  
 
-        <div class=" bg-white flex justify-center  ">
-            <div class="mt-10 mx-8" style="width: 50%;">
-                <img style="width: auto;" src="<?php echo $article['imageAr']; ?>" alt="<?php echo $article['nomAr']; ?>" class="  ">
             </div>
-            <div class=" flex flex-col  "style="width: 50%;">
-                <h1 style="width: auto;" class="text-2xl font-semibold text-gray-800 "><?php echo $article['nomAr']; ?></h1>
-                <p style="width: auto;" class="text-base text-gray-600 "><?php echo $article['descriptionAr']; ?></p>
-            </div>
-        </div>
+       = 
 
 </body>
 </body>
