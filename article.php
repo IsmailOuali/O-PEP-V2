@@ -34,9 +34,9 @@ if (isset($_POST["save_data"])) {
 
       if ($result) {
 
-          echo "Insertion réussie.";
+       
           echo "<script>alert('Article cree avec succès.')</script>";
-          echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
+          // echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
       } else {
 
           echo "Erreur de creation : " . mysqli_error($conn);
@@ -292,6 +292,11 @@ if (isset($_POST["save_data"])) {
 <!-- --------------------------------------------------fin-------------------------------------------------------- -->
 
 <section class="w-100 " style="margin-top: 150px;" >
+<div class="w-75 input-group rounded mx-auto my-3">
+<form class="w-50 input-group rounded mx-auto md-form form-sm" method="post" action="">
+  <input class="form-control border border-success form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" id="Search" name="keyword">
+</form>
+</div>
 <div class="barre d-flex justify-content-center align-items-center gap-5">
   <!-- ------------tags------------------- -->
   <div class="tags d-flex gap-3">
@@ -328,9 +333,9 @@ if (isset($_POST["save_data"])) {
         </div>
     </div>
 </div>
-<div class="w-100 row d-flex justify-content-center gap-5" style="margin-top:40px">
+<div class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
   <?php  
-  $reqarticle="select * from articles where idTh=$idth ";
+  $reqarticle="select * from articles where idTh=$idth LIMIT 6 ";
   $result=mysqli_query($conn,$reqarticle);
   while($row=mysqli_fetch_row($result)) {
    $_SESSION['idAr']=$row[0];
@@ -385,10 +390,97 @@ if (isset($_POST["save_data"])) {
   ?>
   
 </section>
+<!------------------------- Pagination ----------------------->
+<div class="pagination  d-flex justify-content-center">
+  <?php
+  $pagination = 0;
+  $page = "SELECT COUNT(idAr) as totalarticle from articles where idTh=$idth";
+  $result = mysqli_query($conn, $page);
+  $row = mysqli_fetch_row($result);
+  $pagination = $row[0];
+
+
+  $totalpage = ceil($pagination / 6);
+  if ($totalpage>1) {
+  ?>
+    <div class="pagination d-flex gap-2 justify-content-center">
+      <?php
+      for ($i = 1; $i <= $totalpage; $i++) {
+      ?>
+        <button class="btn btn-success page" value="<?php echo $i ?>"><?php echo $i ?></button>
+      <?php
+      }
+      ?>
+    </div>
+  <?php
+  }
+ ?>
+</div>
 
 
 
 <?php include './include/footer.php' ?>
+<script>
+  let section = document.querySelector('.test');
+  var Search = document.getElementById("Search");
+  //affichage
+  
+    function fetchArticle() {
+      let section = document.querySelector('.test');
+      let XML = new XMLHttpRequest();
+  
+      XML.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          section.innerHTML = this.responseText;
+        }
+      };
+  
+      XML.open('GET', 'dataarticle.php?idTh=<?php echo $idth ?>');
+      XML.send();
+    }
 
+  Search.addEventListener("input", function() {
+    let s = Search.value;
+    if (s === '') {
+    fetchArticle();
+    } else {
+
+      let XML = new XMLHttpRequest();
+      XML.onreadystatechange = function() {
+        if (this.status == 200) {
+
+          section.innerHTML = this.responseText;
+        }
+      }
+
+      XML.open('GET', 'seachajax.php?search=' + s + '&idTh=<?php echo $idth ?>');
+      XML.send();
+    }
+  });
+  var pagebutton = document.querySelectorAll('.page');
+  pagebutton.forEach(BTNNM => {
+    BTNNM.addEventListener("click", function() {
+      let pagevalue = this.value;
+      // Search.value="";
+
+
+      let HTTP = new XMLHttpRequest();
+
+      HTTP.onreadystatechange = function() {
+        if (this.status == 200) {
+          section.innerHTML = this.responseText;
+        }
+      }
+      console.log(pagevalue);
+      console.log("theme=<?php echo $idth; ?>");
+      
+
+      HTTP.open('POST', 'pagination.php');
+       HTTP.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      HTTP.send("page=" + pagevalue + '&theme=<?php echo $idth ?>');
+
+    })
+  })
+</script>
 </body>
 </html>
