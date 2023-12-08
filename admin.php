@@ -159,6 +159,7 @@ if (isset($_POST['submitSuppressionArticle'])) {
 }
 
 
+
 ?>
 
 
@@ -169,13 +170,30 @@ if (isset($_POST['submitSuppressionArticle'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="styleAdmin.css">
-   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-   <title>OPEP</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleAdmin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <title>OPEP</title>
+    <style>
+          .btnTags{
+      border-radius: 7px;
+      height: 40px;
+      width: auto;
+      margin-top: 20px;
+      background-color: #132a137e;
+      color: white;
+    }
+    .tags{
+        margin: 0 0 15px 0;
+    }
+    #affichageChamp{
+      
+        padding: 20px 0;
+    }
+    </style>
 </head>
 <body class="body">
    <section class="header">
@@ -345,62 +363,69 @@ function afficherFormulaireSuppressionArticle() {
 
 // ----------------------------------------------FormulaireModiferTheme------------------------------------
 function afficherFormulaireModificationTheme() {
-       var formContainer = document.getElementById("formContainer");
-       formContainer.innerHTML = `
-           <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
-           <h2>Modifier Theme</h2>
-           <form method="POST" onsubmit="submitModificationTheme()">
-               <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
-               <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
-                   <?php
-                   // Récupérer les catégories depuis la base de données
-                   $ThemesQuery = $conn->query("SELECT * FROM themes");
+        var formContainer = document.getElementById("formContainer");
+        formContainer.innerHTML = `
+            <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
+            <h2>Modifier Theme</h2>
+            <form method="POST" onsubmit="submitModificationTheme()">
+                <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
+                <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne(this)">
+                <option Selected>Select ...</option>
+                    <?php
+                    // Récupérer les catégories depuis la base de données
+                    $ThemesQuery = $conn->query("SELECT * FROM themes");
+                          
+                    while ($Theme = $ThemesQuery->fetch_assoc()) {
+                        echo "<option class='option' value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
+                    }
+                    ?>
+                </select><br>
+              
+                <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
+                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
+                <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
+                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
+                <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
+                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
+                <h3 class="tags">Tags</h3>
+                <div id="affichageChamp"></div>
+                <button type="submit" name="submitModificationTheme" class="btnTags" >Modifier</button>
+            </form>
+        `;
+    }
 
-                   while ($Theme = $ThemesQuery->fetch_assoc()) {
-                       echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
-                   }
-                   ?>
-               </select><br>
-               <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
-               <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
-               <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
-               <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
-               <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
-               <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
-               <h3>Tags</h3>
-               <p id="affichageChamp"></p>
-               <button type="submit" name="submitModificationTheme">Modifier</button>
-           </form>
-       `;
-   }
 
-   function afficherChampSelectionne() {
-       // Récupérer la valeur sélectionnée de la liste déroulante
-       var champSelectionne = document.getElementById("champSelectionne").value;
+    function afficherChampSelectionne() {
+        // Récupérer la valeur sélectionnée de la liste déroulante
+        var champSelectionne = document.getElementById("champSelectionne").value;
 
        // Afficher la valeur sélectionnée
        document.getElementById("affichageChamp").innerText = champSelectionne;
        
    }
 
-   // ----------------------------------------------FormulaireAjoutTheme------------------------------------
-   function afficherFormulaireAjoutTheme() {
-   var formContainer = document.getElementById("formContainer");
-   formContainer.innerHTML = `
-       <div class="close-button" onclick="fermerFormulaireAjoutTheme()">X</div>
-       <h2>Ajouter Theme</h2>
-       <form method="POST" onsubmit="ajouterTheme(); return false;">
-           <label for="nomTheme">Nom de Theme:</label>
-           <input type="text" id="nomTheme" name="nomTheme"><br>
-           <label for="descriptionTheme">Description de Theme:</label>
-           <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
-           <label for="imageTheme">Image de Theme:</label>
-           <input type="file" id="imageTheme" name="imageTheme"><br>
-           <label for="tags">Tags (séparés par des virgules):</label>
-           <input type="text" id="tags" name="tags"><br>
-           <button type="submit" name="submitTheme">Ajouter</button>
-       </form>
-   `;
+
+
+
+
+    // ----------------------------------------------FormulaireAjoutTheme------------------------------------
+    function afficherFormulaireAjoutTheme() {
+    var formContainer = document.getElementById("formContainer");
+    formContainer.innerHTML = `
+        <div class="close-button" onclick="fermerFormulaireAjoutTheme()">X</div>
+        <h2>Ajouter Theme</h2>
+        <form method="POST" onsubmit="ajouterTheme(); return false;">
+            <label for="nomTheme">Nom de Theme:</label>
+            <input type="text" id="nomTheme" name="nomTheme"><br>
+            <label for="descriptionTheme">Description de Theme:</label>
+            <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
+            <label for="imageTheme">Image de Theme:</label>
+            <input type="file" id="imageTheme" name="imageTheme"><br>
+            <label for="tags">Tags (séparés par des virgules):</label>
+            <input type="text" id="tags" name="tags"><br>
+            <button type="submit" name="submitTheme">Ajouter</button>
+        </form>
+    `;
 }
 
 // ----------------------------------------------FormulaireSupprimerTheme------------------------------------
@@ -460,6 +485,31 @@ function fermerFormulaireModificationTheme() {
        var formContainer = document.getElementById("formContainer");
        formContainer.innerHTML = "";
    }
+
+
+    var input =document.querySelectorAll('#champSelectionne');
+    input.forEach(btn=>{
+        btn.addEventListener("click",function(){
+            let x=this.value;
+            console.log(x);
+        })
+    })
+
+
+    function afficherChampSelectionne(selectElement) {
+    const selectedValue = selectElement.value;
+    console.log("Selected Value:", selectedValue);
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.querySelector('#affichageChamp').innerHTML = this.responseText;
+        }
+    };
+    xhr.open("GET", "validertags.php?tag="+selectedValue, true);
+        xhr.send();
+}
 
 </script>
 
