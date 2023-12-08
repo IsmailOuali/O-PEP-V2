@@ -371,6 +371,32 @@ function afficherFormulaireSuppressionArticle() {
 }
 
 
+                    while ($Theme = $ThemesQuery->fetch_assoc()) {
+                        echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
+                    }
+                    ?>
+                </select><br>
+                <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
+                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
+                <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
+                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
+                <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
+                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
+                <h3>Tags</h3>
+                <p id="affichageChamp"></p>
+                <button type="submit" name="submitModificationTheme">Modifier</button>
+            </form>
+        `;
+    }
+
+    function afficherChampSelectionne() {
+        // Récupérer la valeur sélectionnée de la liste déroulante
+        var champSelectionne = document.getElementById("champSelectionne").value;
+
+        // Afficher la valeur sélectionnée
+        document.getElementById("affichageChamp").innerText = champSelectionne;
+        
+    }
 
 
 
