@@ -141,24 +141,21 @@ if ($result != false) {
     echo "<script>alert('Erreur lors de la suppression du thème. Veuillez réessayer.')</script>";
 }
 }
-
-
-
 // supprimer Article
 if (isset($_POST['submitSuppressionArticle'])) {
 
-     $idArticle = $_POST['idArticleSuppression'];
-    echo "<script>alert('ID de l'article à supprimer : " . $idArticle . "')</script>";
+    $idArticle = $_POST['idArticleSuppression'];
+   echo "<script>alert('ID de l'article à supprimer : " . $idArticle . "')</script>";
 
-    $deleteArticleQuery = "DELETE FROM articles WHERE idAr = '$idArticle'";
-    $result = $conn->query($deleteArticleQuery);
+   $deleteArticleQuery = "DELETE FROM articles WHERE idAr = '$idArticle'";
+   $result = $conn->query($deleteArticleQuery);
 
-    if ($result) {
-        echo "<script>alert('L'article a été supprimé avec succès.')</script>";
-        echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
-    } else {
-        echo "<script>alert('Erreur lors de la suppression de l'article : " . $conn->error . "')</script>";
-    }
+   if ($result) {
+       echo "<script>alert('L'article a été supprimé avec succès.')</script>";
+       echo "<script>setTimeout(function(){ window.location.href = 'admin.php'; }, 1000);</script>";
+   } else {
+       echo "<script>alert('Erreur lors de la suppression de l'article : " . $conn->error . "')</script>";
+   }
 }
 
 
@@ -172,300 +169,297 @@ if (isset($_POST['submitSuppressionArticle'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styleAdmin.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <title>OPEP</title>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="styleAdmin.css">
+   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+   <title>OPEP</title>
 </head>
 <body class="body">
-    <section class="header">
-        <h1><span style="color: #567255;">O</span>P<span style="color: #567255;">E</span>P</h1>
-    </section>
-    <section class="main">
-        <div class="sidebar">
-            <ul class="sidebar--items">
-                <li>
-                    <a href="#"  onclick="afficherFormulaireAjoutCategorie()">
-                        <div class="sidebar--item">Ajouter Catégorie</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="sidebar--item" onclick="afficherFormulaireModificationCategorie()">Modifier Catégorie</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="afficherFormulaireAjoutPlante()">
-                        <div class="sidebar--item">Ajouter Plante</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionPlante()">Supprimer Plante</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="sidebar--item" onclick="afficherFormulaireAjoutTheme()">Ajouter Theme</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="sidebar--item" onclick="supprimerFormulaireTheme()">Supprimer Theme</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="sidebar--item" onclick="afficherFormulaireModificationTheme()">Modifier Theme</div>
-                    </a>
-                </li>
-            </ul>
-            <!-- <ul class="sidebar--bottom--items">
-                <li>
-                    <a href="connection.php">
-                        <span class="icon"><i class="ri-logout-box-r-line"></i></span>
-                        <div class="sidebar--item">Logout</div>
-                    </a>
-                </li>
-            </ul> -->
-        </div>
-        <div class="main--container">
-            <div class="form-container" id="formContainer">
-                <!-- Ici, le formulaire apparaîtra après le clic sur "Ajouter Plante" -->
-            </div>
-        </div>
-    </section>
+   <section class="header">
+       <h1><span style="color: #567255;">O</span>P<span style="color: #567255;">E</span>P</h1>
+   </section>
+   <section class="main">
+       <div class="sidebar">
+           <ul class="sidebar--items">
+               <li>
+                   <a href="#"  onclick="afficherFormulaireAjoutCategorie()">
+                       <div class="sidebar--item">Ajouter Catégorie</div>
+                   </a>
+               </li>
+               <li>
+                   <a href="#">
+                       <div class="sidebar--item" onclick="afficherFormulaireModificationCategorie()">Modifier Catégorie</div>
+                   </a>
+               </li>
+               <li>
+                   <a href="#" onclick="afficherFormulaireAjoutPlante()">
+                       <div class="sidebar--item">Ajouter Plante</div>
+                   </a>
+               </li>
+               <li>
+                   <a href="#">
+                       <div class="sidebar--item" onclick="afficherFormulaireSuppressionPlante()">Supprimer Plante</div>
+                   </a>
+               </li>
+               <li>
+                   <a href="#">
+                       <div class="sidebar--item" onclick="afficherFormulaireAjoutTheme()">Ajouter Theme</div>
+                   </a>
+               </li>
+               <li>
+                   <a href="#">
+                       <div class="sidebar--item" onclick="supprimerFormulaireTheme()">Supprimer Theme</div>
+                   </a>
+               </li>
+               <li>
+                   <a href="#">
+                       <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
+                   </a>
+               </li>
+               <li>
+                   <a href="#">
+                       <div class="sidebar--item" onclick="afficherFormulaireModificationTheme()">Modifier Theme</div>
+                   </a>
+               </li>
+           </ul>
+           <!-- <ul class="sidebar--bottom--items">
+               <li>
+                   <a href="connection.php">
+                       <span class="icon"><i class="ri-logout-box-r-line"></i></span>
+                       <div class="sidebar--item">Logout</div>
+                   </a>
+               </li>
+           </ul> -->
+       </div>
+       <div class="main--container">
+           <div class="form-container" id="formContainer">
+               <!-- Ici, le formulaire apparaîtra après le clic sur "Ajouter Plante" -->
+           </div>
+       </div>
+   </section>
 
-    <!-- ... Votre code JavaScript existant ... -->
+   <!-- ... Votre code JavaScript existant ... -->
 
 <script>
-    // ----------------------------------------------FormulaireAjoutPlante------------------------------------
-    function afficherFormulaireAjoutPlante() {
-        var formContainer = document.getElementById("formContainer");
-        formContainer.innerHTML = `
-            <div class="close-button" onclick="fermerFormulaireAjoutPlante()">X</div>
-            <h2>Ajouter Plante</h2>
-            <form method="POST"  >
+   // ----------------------------------------------FormulaireAjoutPlante------------------------------------
+   function afficherFormulaireAjoutPlante() {
+       var formContainer = document.getElementById("formContainer");
+       formContainer.innerHTML = `
+           <div class="close-button" onclick="fermerFormulaireAjoutPlante()">X</div>
+           <h2>Ajouter Plante</h2>
+           <form method="POST"  >
 
-                <label for="idCategorie">Catégorie :</label>
-                <select id="idCategorie" name="idCategorie" required>
-                    <?php
-                    // Récupérer les catégories depuis la base de données
-                    $categoriesQuery = $conn->query("SELECT * FROM categories");
+               <label for="idCategorie">Catégorie :</label>
+               <select id="idCategorie" name="idCategorie" required>
+                   <?php
+                   // Récupérer les catégories depuis la base de données
+                   $categoriesQuery = $conn->query("SELECT * FROM categories");
 
-                    while ($categorie = $categoriesQuery->fetch_assoc()) {
-                        echo "<option value='{$categorie['idCategorie']}'>{$categorie['nomCategorie']}</option>";
-                    }
-                    ?>
-                </select><br>
-                <label for="nomPlante">Nom de la Plante:</label>
-                <input type="text" id="nomPlante" name="nomPlante" required><br>
-                <label for="imagePlante">Image de la Plante (URL):</label>
-                <input type="file" id="imagePlante" name="imagePlante" required><br>
+                   while ($categorie = $categoriesQuery->fetch_assoc()) {
+                       echo "<option value='{$categorie['idCategorie']}'>{$categorie['nomCategorie']}</option>";
+                   }
+                   ?>
+               </select><br>
+               <label for="nomPlante">Nom de la Plante:</label>
+               <input type="text" id="nomPlante" name="nomPlante" required><br>
+               <label for="imagePlante">Image de la Plante (URL):</label>
+               <input type="file" id="imagePlante" name="imagePlante" required><br>
 
-                <label for="descriptionPlante">Description:</label>
-                <textarea id="descriptionPlante" name="descriptionPlante" required></textarea><br>
+               <label for="descriptionPlante">Description:</label>
+               <textarea id="descriptionPlante" name="descriptionPlante" required></textarea><br>
 
-                <label for="stockPlante">Stock:</label>
-                <input type="number" id="stockPlante" name="stockPlante" required><br>
+               <label for="stockPlante">Stock:</label>
+               <input type="number" id="stockPlante" name="stockPlante" required><br>
 
-                <label for="prixFr">Prix (en Francs CFA):</label>
-                <input type="number" id="prixFr" name="prix" required><br>
+               <label for="prixFr">Prix (en Francs CFA):</label>
+               <input type="number" id="prixFr" name="prix" required><br>
 
-                <!-- ... Ajoutez d'autres champs si nécessaire ... -->
+               <!-- ... Ajoutez d'autres champs si nécessaire ... -->
 
-                <button type="submit" name="submitPlante">Ajouter</button>
-            </form>
-        `;
-    }
+               <button type="submit" name="submitPlante">Ajouter</button>
+           </form>
+       `;
+   }
 
-  // ----------------------------------------------FormulaireAjoutCategorie------------------------------------
-    function afficherFormulaireAjoutCategorie() {
-        var formContainer = document.getElementById("formContainer");
-        formContainer.innerHTML = `
-            <div class="close-button" onclick="fermerFormulaireAjoutCategorie()">X</div>
-            <h2>Ajouter Catégorie</h2>
-            <form method="POST">
-                <label for="nomCategorie">Nom de la Catégorie:</label>
-                <input type="text" id="nomCategorie" name="nomCategorie" required><br>
-                <button type="submit" name="submitCategorie">Ajouter</button>
-            </form>
-        `;
-    }
+ // ----------------------------------------------FormulaireAjoutCategorie------------------------------------
+   function afficherFormulaireAjoutCategorie() {
+       var formContainer = document.getElementById("formContainer");
+       formContainer.innerHTML = `
+           <div class="close-button" onclick="fermerFormulaireAjoutCategorie()">X</div>
+           <h2>Ajouter Catégorie</h2>
+           <form method="POST">
+               <label for="nomCategorie">Nom de la Catégorie:</label>
+               <input type="text" id="nomCategorie" name="nomCategorie" required><br>
+               <button type="submit" name="submitCategorie">Ajouter</button>
+           </form>
+       `;
+   }
 
 // ----------------------------------------------FormulaireSupprimerPlante------------------------------------
-    function afficherFormulaireSuppressionPlante() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = `
-        <div class="close-button" onclick="fermerFormulaireSuppressionPlante()">X</div>
-        <h2>Supprimer Plante</h2>
-        <form method="POST">
-            <label for="idPlanteSuppression">Sélectionnez la plante à supprimer :</label>
-            <select id="idPlanteSuppression" name="idPlanteSuppression" class="form-control" required>
-                <?php
+   function afficherFormulaireSuppressionPlante() {
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = `
+       <div class="close-button" onclick="fermerFormulaireSuppressionPlante()">X</div>
+       <h2>Supprimer Plante</h2>
+       <form method="POST">
+           <label for="idPlanteSuppression">Sélectionnez la plante à supprimer :</label>
+           <select id="idPlanteSuppression" name="idPlanteSuppression" class="form-control" required>
+               <?php
 
-                $plantesQuery = $conn->query("SELECT * FROM plantes");
+               $plantesQuery = $conn->query("SELECT * FROM plantes");
 
-                while ($plante = $plantesQuery->fetch_assoc()) {
-                    echo "<option value='{$plante['idPlante']}'>{$plante['nomPlante']}</option>";
-                }
-                ?>
-            </select><br>
-            <button id="bttn" type="submit" name="submitSuppressionPlante">Supprimer</button>
-        </form>
-    `;
+               while ($plante = $plantesQuery->fetch_assoc()) {
+                   echo "<option value='{$plante['idPlante']}'>{$plante['nomPlante']}</option>";
+               }
+               ?>
+           </select><br>
+           <button id="bttn" type="submit" name="submitSuppressionPlante">Supprimer</button>
+       </form>
+   `;
 }
 // ----------------------------------------------FormulaireSupprimerArticle------------------------------------
 function afficherFormulaireSuppressionArticle() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = `
-        <div class="close-button" onclick="fermerFormulaireSuppressionArticle()">X</div>
-        <h2>Supprimer Article</h2>
-        <form method="POST">
-            <label for="idArticleSuppression">Sélectionnez la article à supprimer :</label>
-            <select id="idArticleSuppression" name="idArticleSuppression" class="form-control" required>
-                <?php
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = `
+       <div class="close-button" onclick="fermerFormulaireSuppressionArticle()">X</div>
+       <h2>Supprimer Article</h2>
+       <form method="POST">
+           <label for="idArticleSuppression">Sélectionnez la article à supprimer :</label>
+           <select id="idArticleSuppression" name="idArticleSuppression" class="form-control" required>
+               <?php
 
-                $articlesQuery = $conn->query("SELECT * FROM articles");
+               $articlesQuery = $conn->query("SELECT * FROM articles");
 
-                while ($article = $articlesQuery->fetch_assoc()) {
-                    echo "<option value='{$article['idAr']}'>{$article['nomAr']}</option>";
-                }
-                ?>
-            </select><br>
-            <button id="bttn" type="submit" name="submitSuppressionArticle">Supprimer</button>
-        </form>
-    `;
+               while ($article = $articlesQuery->fetch_assoc()) {
+                   echo "<option value='{$article['idAr']}'>{$article['nomAr']}</option>";
+               }
+               ?>
+           </select><br>
+           <button id="bttn" type="submit" name="submitSuppressionArticle">Supprimer</button>
+       </form>
+   `;
 }
 
 // ----------------------------------------------FormulaireModiferTheme------------------------------------
 function afficherFormulaireModificationTheme() {
-        var formContainer = document.getElementById("formContainer");
-        formContainer.innerHTML = `
-            <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
-            <h2>Modifier Theme</h2>
-            <form method="POST" onsubmit="submitModificationTheme()">
-                <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
-                <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
-                    <?php
-                    // Récupérer les catégories depuis la base de données
-                    $ThemesQuery = $conn->query("SELECT * FROM themes");
+       var formContainer = document.getElementById("formContainer");
+       formContainer.innerHTML = `
+           <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
+           <h2>Modifier Theme</h2>
+           <form method="POST" onsubmit="submitModificationTheme()">
+               <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
+               <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
+                   <?php
+                   // Récupérer les catégories depuis la base de données
+                   $ThemesQuery = $conn->query("SELECT * FROM themes");
 
-                    while ($Theme = $ThemesQuery->fetch_assoc()) {
-                        echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
-                    }
-                    ?>
-                </select><br>
-                <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
-                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
-                <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
-                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
-                <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
-                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
-                <h3>Tags</h3>
-                <p id="affichageChamp"></p>
-                <button type="submit" name="submitModificationTheme">Modifier</button>
-            </form>
-        `;
-    }
+                   while ($Theme = $ThemesQuery->fetch_assoc()) {
+                       echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
+                   }
+                   ?>
+               </select><br>
+               <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
+               <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
+               <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
+               <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
+               <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
+               <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
+               <h3>Tags</h3>
+               <p id="affichageChamp"></p>
+               <button type="submit" name="submitModificationTheme">Modifier</button>
+           </form>
+       `;
+   }
 
-    function afficherChampSelectionne() {
-        // Récupérer la valeur sélectionnée de la liste déroulante
-        var champSelectionne = document.getElementById("champSelectionne").value;
+   function afficherChampSelectionne() {
+       // Récupérer la valeur sélectionnée de la liste déroulante
+       var champSelectionne = document.getElementById("champSelectionne").value;
 
-        // Afficher la valeur sélectionnée
-        document.getElementById("affichageChamp").innerText = champSelectionne;
-        
-    }
+       // Afficher la valeur sélectionnée
+       document.getElementById("affichageChamp").innerText = champSelectionne;
+       
+   }
 
-
-
-
-    // ----------------------------------------------FormulaireAjoutTheme------------------------------------
-    function afficherFormulaireAjoutTheme() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = `
-        <div class="close-button" onclick="fermerFormulaireAjoutTheme()">X</div>
-        <h2>Ajouter Theme</h2>
-        <form method="POST" onsubmit="ajouterTheme(); return false;">
-            <label for="nomTheme">Nom de Theme:</label>
-            <input type="text" id="nomTheme" name="nomTheme"><br>
-            <label for="descriptionTheme">Description de Theme:</label>
-            <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
-            <label for="imageTheme">Image de Theme:</label>
-            <input type="file" id="imageTheme" name="imageTheme"><br>
-            <label for="tags">Tags (séparés par des virgules):</label>
-            <input type="text" id="tags" name="tags"><br>
-            <button type="submit" name="submitTheme">Ajouter</button>
-        </form>
-    `;
+   // ----------------------------------------------FormulaireAjoutTheme------------------------------------
+   function afficherFormulaireAjoutTheme() {
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = `
+       <div class="close-button" onclick="fermerFormulaireAjoutTheme()">X</div>
+       <h2>Ajouter Theme</h2>
+       <form method="POST" onsubmit="ajouterTheme(); return false;">
+           <label for="nomTheme">Nom de Theme:</label>
+           <input type="text" id="nomTheme" name="nomTheme"><br>
+           <label for="descriptionTheme">Description de Theme:</label>
+           <input type="text" id="DescriptionTheme" name="descriptionTheme"><br>
+           <label for="imageTheme">Image de Theme:</label>
+           <input type="file" id="imageTheme" name="imageTheme"><br>
+           <label for="tags">Tags (séparés par des virgules):</label>
+           <input type="text" id="tags" name="tags"><br>
+           <button type="submit" name="submitTheme">Ajouter</button>
+       </form>
+   `;
 }
 
 // ----------------------------------------------FormulaireSupprimerTheme------------------------------------
 
 function supprimerFormulaireTheme(){
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = `
-    <div class="close-button" onclick="fermerFormulaireSupprimerFormulaireTheme()">X</div>
-        <h2>Supprimer Theme</h2>
-        <form method="POST">
-            <label for="idthemeSuppression">Sélectionnez leTheme à supprimer :</label>
-            <select id="idthemeSuppression" name="idthemeSuppression" class="form-control" required>
-                <?php
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = `
+   <div class="close-button" onclick="fermerFormulaireSupprimerFormulaireTheme()">X</div>
+       <h2>Supprimer Theme</h2>
+       <form method="POST">
+           <label for="idthemeSuppression">Sélectionnez leTheme à supprimer :</label>
+           <select id="idthemeSuppression" name="idthemeSuppression" class="form-control" required>
+               <?php
 
-                $themesQuery = $conn->query("SELECT * FROM themes");
+               $themesQuery = $conn->query("SELECT * FROM themes");
 
-                while ($theme = $themesQuery->fetch_assoc()) {
-                    echo "<option value='{$theme['idTh']}'>{$theme['nomTh']}</option>";
-                }
-                ?>
-            </select><br>
-            <button id="bttn" type="submit" name="submitSuppressiontheme">Supprimer</button>
-        </form>
-        `;
+               while ($theme = $themesQuery->fetch_assoc()) {
+                   echo "<option value='{$theme['idTh']}'>{$theme['nomTh']}</option>";
+               }
+               ?>
+           </select><br>
+           <button id="bttn" type="submit" name="submitSuppressiontheme">Supprimer</button>
+       </form>
+       `;
 }
 //****************************************************************************************************************** */
 
 function fermerFormulaireModificationCategorie() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = "";
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = "";
 }
 
 
 function fermerFormulaireSuppressionPlante() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = "";
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = "";
 }
 
 
 function fermerFormulaireAjoutPlante() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = ""; 
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = ""; 
 }
 
 
 function fermerFormulaireAjoutCategorie() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = ""; 
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = ""; 
 }
 
 function fermerFormulaireSupprimerFormulaireTheme() {
-    var formContainer = document.getElementById("formContainer");
-    formContainer.innerHTML = ""; 
+   var formContainer = document.getElementById("formContainer");
+   formContainer.innerHTML = ""; 
 }
 
 function fermerFormulaireModificationTheme() {
-        var formContainer = document.getElementById("formContainer");
-        formContainer.innerHTML = "";
-    }
+       var formContainer = document.getElementById("formContainer");
+       formContainer.innerHTML = "";
+   }
 
 </script>
 
