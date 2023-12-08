@@ -36,7 +36,7 @@ if (isset($_POST["save_data"])) {
 
        
           echo "<script>alert('Article cree avec succès.')</script>";
-          // echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
+          echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
       } else {
 
           echo "Erreur de creation : " . mysqli_error($conn);
@@ -44,11 +44,33 @@ if (isset($_POST["save_data"])) {
   } 
 }
 
+if(isset($_POST['cancel'])){
+  header("Location: article.php?id=$idth");
+}
+
+if(isset($_POST['addComm'])){
+  $commenter=$_POST['commente'];
+  
+  $idAr=$_POST['articleId'];
+  
+  // insertion du commentaire
+  $req = "INSERT INTO commentaire (contenuCom, idUtl, idAr) VALUES 
+        ('$commenter', '$idUser', '$idAr')";
+
+  $result = mysqli_query($conn, $req);
+
+  if ($result) {
+      echo "<script>alert('commenter cree avec succès.')</script>";
+      echo "<script>setTimeout(function(){ window.location.href = 'article.php?id=$idth'; }, 1000);</script>";
+  } else {
+
+      echo "Erreur de creation : " . mysqli_error($conn);
+  }
+  
+}
+
 
 ?>
-
-
-
 
 <style>
 
@@ -183,12 +205,14 @@ if (isset($_POST["save_data"])) {
     .imogies{
       cursor: pointer;
     }
+    .modal-content{
+      max-height: 80vh;
+      overflow-y: scroll !important;
+    }
 
 
 
 </style>
-
-
 
 
 <!DOCTYPE html>
@@ -299,14 +323,20 @@ if (isset($_POST["save_data"])) {
           <h1 class="modal-title fs-5" id="insertdataLabel">Commentaire</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form class="d-flex justify-content-center flex-column">
+        <div class="CMT">
+<!-- comments -->
+
+</div>
+
+        <form method="POST" class="d-flex justify-content-center flex-column">
           <div class="user_com d-flex gap-1">
           <img src="plantes/user2.png" alt="user" style="border-radius: 50%; width:30px; height:30px">
-          <textarea style="width: 200px;" type="text"  name="commenter" ></textarea>
+          <textarea style="width: 200px;" type="text"  name="commente" ></textarea>
           </div>
           <div class="btn d-flex justify-content-center gap-1 ">
-          <button class="btnTags" style="background-color: blue; height:30px; color:white ;font-size:12px">POST COMMENT</button>
-          <button class="btnTags" style="height:30px; color:blue ;font-size:12px">CANCEL</button>
+          <input id="articleIdPopup" type="hidden" name="articleId" value="">
+          <button class="btnTags" type="submit" name="addComm" style="background-color: blue; height:30px; color:white ;font-size:12px">POST COMMENT</button>
+          <button class="btnTags" type="submit" name="cancel" style="height:30px; color:blue ;font-size:12px">CANCEL</button>
           </div>
         </form>
         
@@ -319,12 +349,12 @@ if (isset($_POST["save_data"])) {
 <section class="w-100 " style="margin-top: 150px;" >
 <div class="w-75 input-group rounded mx-auto my-3">
 <form class="w-50 input-group rounded mx-auto md-form form-sm" method="post" action="">
-  <input class="form-control border border-success form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" id="Search" name="keyword">
+  <input style="width:30vw ; height: 3vw " class="" type="text" placeholder="Search" aria-label="Search" id="Search" name="keyword">
 </form>
 </div>
 <div class="barre d-flex justify-content-center align-items-center gap-5">
   <!-- ------------tags------------------- -->
-  <div class="tags d-flex gap-3 " style=" margin-left:550px">
+  <div class="tags d-flex gap-3 " style=" margin-left:50px">
           <?php
               $req="SELECT nomTag
               FROM tags tg
@@ -339,7 +369,7 @@ if (isset($_POST["save_data"])) {
             ?>
   </div>
   <!-- ------------add article --------------->
-  <div style="margin-left: 450px" >
+  <div style="margin-left: 50px" >
         <div class=" justify-content-center ">
             <div class="">
                 <div class="">
@@ -362,7 +392,7 @@ if (isset($_POST["save_data"])) {
   $reqarticle="select * from articles where idTh=$idth LIMIT 6 ";
   $result=mysqli_query($conn,$reqarticle);
   while($row=mysqli_fetch_row($result)) {
-   $_SESSION['idAr']=$row[0];
+   $articleId = $row[0];
   ?>
 <div class="card mb-4 col- "style="width:25%">
 
@@ -385,14 +415,14 @@ if (isset($_POST["save_data"])) {
       <div class="imogi d-flex gap-4">
             <!-- commentaire -->
             
-            <button id="commentaire"class="btn" data-bs-toggle="modal" data-bs-target="#insertdataCommentaire">
+            <button onclick="getarticleId(<?= $articleId ?>)" id="commentaire"class="btn" data-bs-toggle="modal" data-bs-target="#insertdataCommentaire">
             <svg class="imogies" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
             <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894m-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
             </svg>
             </button>
       </div>
       <div class="read d-flex justify-content-center align-items-center">
-        <button type="submit" name="read_more" id="read" class="btn btn-light-blue btn-md">Read more</button>
+        <button type="submit" name="read_more" id="read" class="btn btn-light-blue btn-md">Read more </button>
         <svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
         </svg>
@@ -481,7 +511,7 @@ if (isset($_POST["save_data"])) {
   pagebutton.forEach(BTNNM => {
     BTNNM.addEventListener("click", function() {
       let pagevalue = this.value;
-      // Search.value="";
+
 
 
       let HTTP = new XMLHttpRequest();
@@ -501,6 +531,23 @@ if (isset($_POST["save_data"])) {
 
     })
   })
+</script>
+<script>
+  function getarticleId(id){
+    console.log(id);
+    document.getElementById('articleIdPopup').value = id;
+
+    let xml = new XMLHttpRequest();
+    xml.onreadystatechange = function() {
+      if(this.status==200) {
+          console.log(id);
+          document.querySelector('.CMT').innerHTML = this.responseText;
+      }
+    }
+    xml.open('GET','test.php?id='+id);
+    xml.send();
+  }
+
 </script>
 </body>
 </html>
