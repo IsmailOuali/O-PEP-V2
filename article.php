@@ -356,7 +356,7 @@ if(isset($_POST['addComm'])){
   <!-- ------------tags------------------- -->
   <div class="tags d-flex gap-3 " style=" margin-left:50px">
           <?php
-              $req="SELECT nomTag
+              $req="SELECT *
               FROM tags tg
               JOIN tags_theme tgh ON tg.idTag = tgh.idTag
               JOIN themes th ON th.idTh = tgh.idTh
@@ -364,8 +364,10 @@ if(isset($_POST['addComm'])){
 
               $result= $conn->query($req);
               while ($row=$result->fetch_assoc()) {
-                echo '<input type="button"  class="btnTags" value="'.$row['nomTag'].'" name="tag[]">';
-                }           
+                ?>
+                <button class="btnTags btns" value="<?php echo $row['nomTag']?>"><?php echo $row['nomTag']?></button>
+                <?php
+                }          
             ?>
   </div>
   <!-- ------------add article --------------->
@@ -387,7 +389,7 @@ if(isset($_POST['addComm'])){
         </div>
     </div>
 </div>
-<div class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
+<div id="cardT" class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
   <?php  
   $reqarticle="select * from articles where idTh=$idth LIMIT 6 ";
   $result=mysqli_query($conn,$reqarticle);
@@ -548,6 +550,26 @@ if(isset($_POST['addComm'])){
     xml.send();
   }
 
+
+
+    var btntag = document.querySelectorAll('.btns');
+    btntag.forEach(btn => {
+      btn.addEventListener("click" , function () {
+      let value = btn.value;
+      console.log(value);
+
+      let xml = new XMLHttpRequest();
+
+      xml.onload = function () {
+        if(this.status == 200 && this.readyState==4) {
+          document.getElementById('cardT').innerHTML=this.responseText;
+
+        }
+      }
+      xml.open('GET','tags.php?TAGGid='+value);
+      xml.send();
+    })
+    })
 </script>
 </body>
 </html>
