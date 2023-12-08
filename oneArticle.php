@@ -49,18 +49,18 @@ height: 200px;
 </head>
 <body>
 <body>
-    <div class="  flex items-stretch ">
 
-        <div class=" bg-white   overflow-hidden flex  ">
-            <div class="mt-10 mx-8">
-                <img src="<?php echo $article['imageAr']; ?>" alt="<?php echo $article['nomAr']; ?>" class="  ">
+
+        <div class=" bg-white flex justify-center  ">
+            <div class="mt-10 mx-8" style="width: 50%;">
+                <img style="width: auto;" src="<?php echo $article['imageAr']; ?>" alt="<?php echo $article['nomAr']; ?>" class="  ">
             </div>
-            <div class=" flex  "  >
-                <h1 class="text-2xl font-semibold text-gray-800  mt-12 pl-36"><?php echo $article['nomAr']; ?></h1>
-                <p class="text-base text-gray-600  mt-32 pl-48 pr-16 "><?php echo $article['descriptionAr']; ?></p>
+            <div class=" flex flex-col  "style="width: 50%;">
+                <h1 style="width: auto;" class="text-2xl font-semibold text-gray-800 "><?php echo $article['nomAr']; ?></h1>
+                <p style="width: auto;" class="text-base text-gray-600 "><?php echo $article['descriptionAr']; ?></p>
             </div>
         </div>
-    </div>
+
 </body>
 </body>
 </html>
