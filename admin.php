@@ -109,6 +109,7 @@ if (isset($_POST['submitModificationTheme'])) {
 
 
 
+
 //ajouter theme
 if(isset($_POST['submitTheme'])){
 
@@ -238,9 +239,18 @@ if (isset($_POST['submitSuppressionArticle'])) {
                 </li>
                 <li>
                     <a href="#">
+                        <div class="sidebar--item" onclick="afficherFormulaireSuppressionArticle()">Supprimer Article</div>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="#">
                         <div class="sidebar--item" onclick="afficherFormulaireModificationTheme()">Modifier Theme</div>
                     </a>
                 </li>
+
+
             </ul>
             <!-- <ul class="sidebar--bottom--items">
                 <li>
@@ -360,45 +370,7 @@ function afficherFormulaireSuppressionArticle() {
     `;
 }
 
-// ----------------------------------------------FormulaireModiferTheme------------------------------------
-function afficherFormulaireModificationTheme() {
-        var formContainer = document.getElementById("formContainer");
-        formContainer.innerHTML = `
-            <div class="close-button" onclick="fermerFormulaireModificationTheme()">X</div>
-            <h2>Modifier Theme</h2>
-            <form method="POST" onsubmit="submitModificationTheme()">
-                <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
-                <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
-                    <?php
-                    // Récupérer les catégories depuis la base de données
-                    $ThemesQuery = $conn->query("SELECT * FROM themes");
 
-                    while ($Theme = $ThemesQuery->fetch_assoc()) {
-                        echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
-                    }
-                    ?>
-                </select><br>
-                <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
-                <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" ><br>
-                <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
-                <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" ><br>
-                <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
-                <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" ><br>
-                <h3>Tags</h3>
-                <p id="affichageChamp"></p>
-                <button type="submit" name="submitModificationTheme">Modifier</button>
-            </form>
-        `;
-    }
-
-    function afficherChampSelectionne() {
-        // Récupérer la valeur sélectionnée de la liste déroulante
-        var champSelectionne = document.getElementById("champSelectionne").value;
-
-        // Afficher la valeur sélectionnée
-        document.getElementById("affichageChamp").innerText = "Champ sélectionné : " + champSelectionne;
-        
-    }
 
 
 
@@ -423,7 +395,7 @@ function afficherFormulaireModificationTheme() {
     `;
 }
 
- // ----------------------------------------------FormulaireModifierTheme------------------------------------
+
 
 
 // ----------------------------------------------FormulaireModifierTheme------------------------------------
