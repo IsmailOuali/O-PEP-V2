@@ -179,6 +179,32 @@ if (isset($_POST['submitSuppressionArticle'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>OPEP</title>
+    <style>
+        .main--countainer{
+            padding: 2em;
+            margin: 2em 100em;
+            display: flex;
+            height: 100vh;
+
+        }
+
+        .info-countainer{
+            justify-content: center;
+            align-items: center;
+
+            }
+
+        .infos{
+            padding: 1em;
+            width: 70%;
+            text-align: center;
+            font-size: 1.6em;
+        }
+        .infos .count{
+            color: green;
+        }
+
+    </style>
 </head>
 <body class="body">
     <section class="header">
@@ -240,9 +266,64 @@ if (isset($_POST['submitSuppressionArticle'])) {
         <div class="main--container">
             <div class="form-container" id="formContainer">
                 <!-- Ici, le formulaire apparaîtra après le clic sur "Ajouter Plante" -->
+                <?php
+                    $reqcth= "SELECT COUNT(*) FROM themes";
+                    $sent = mysqli_query($conn, $reqcth);
+
+                    $rowcth = mysqli_fetch_row($sent);
+
+                    $reqctag= "SELECT COUNT(*) FROM tags";
+                    $senttag = mysqli_query($conn, $reqctag);
+
+                    $rowctag = mysqli_fetch_row($senttag);
+
+                    $reqcar= "SELECT COUNT(*) FROM articles";
+                    $sentar = mysqli_query($conn, $reqcar);
+
+                    $rowcar = mysqli_fetch_row($sentar);
+
+
+                    $reqccl= "SELECT COUNT(nomRole) FROM roles WHERE nomRole = 'client'";
+                    $sentcl = mysqli_query($conn, $reqccl);
+
+                    $rowccl = mysqli_fetch_row($sentcl);
+
+                    $reqcad= "SELECT COUNT(nomRole) FROM roles WHERE nomRole = 'admin'";
+                    $sentad = mysqli_query($conn, $reqcad);
+
+                    $rowcad = mysqli_fetch_row($sentad);
+                    ?>
+        <div class="countainer">
+
+            <div class="info-countainer">
+                            
+                <div class="infos">
+                    <p class="titre-count">Nombres de themes:</p>
+                    <p class="count"><?php echo $rowcth[0] ?></p>
+                </div>
+                
+                <div class="infos">
+                    <p class="titre-count">Nombres de tags:</p>
+                    <p class="count"><?php echo $rowctag[0] ?></p>
+                </div>
+                
+                <div class="infos">
+                    <p class="titre-count">Nombres de articles:</p>
+                    <p class="count"><?php echo $rowcar[0] ?></p>
+                </div>
+                <div class="infos">
+                    <p class="titre-count">Nombres de clients:</p>
+                    <p class="count"><?php echo $rowccl[0] ?></p>
+                </div>
+                <div class="infos">
+                    <p class="titre-count">Nombres de admin:</p>
+                    <p class="count"><?php echo $rowcad[0] ?></p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</div>
+</section>
 
     <!-- ... Votre code JavaScript existant ... -->
 

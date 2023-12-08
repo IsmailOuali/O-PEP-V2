@@ -304,18 +304,26 @@ if (isset($_POST["save_data"])) {
 <div class="barre d-flex justify-content-center align-items-center gap-5">
   <!-- ------------tags------------------- -->
   <div class="tags d-flex gap-3">
-          <?php
-              $req="SELECT nomTag
+  <?php
+              $req="SELECT *
               FROM tags tg
               JOIN tags_theme tgh ON tg.idTag = tgh.idTag
               JOIN themes th ON th.idTh = tgh.idTh
               WHERE th.idTh = $idth";
 
               $result= $conn->query($req);
-              while ($row=$result->fetch_assoc()) {
-                echo '<input type="button"  class="btnTags" value="'.$row['nomTag'].'" name="tag[]">';
-                }           
-            ?>
+              ?>
+              <form action="" method="post">
+                <?php
+                while ($row=$result->fetch_assoc()) {
+                  ?>
+                <input type="submit" value="<?php echo $row['nomTag'] ?>" class="btnTags" name="<?php echo $row['idTag'] ?>">
+
+                <?php
+                
+                }
+                ?>
+                </form>
   </div>
   <!-- ------------add article --------------->
   <div class="" >
