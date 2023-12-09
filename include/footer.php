@@ -11862,14 +11862,14 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
-                <h2 class="footer-heading"><a href="#" class="logo">Colorlib.com</a></h2>
+                <h2 class="footer-heading"><a href="#" class="logo">OPEP.com</a></h2>
                 <p class="menu">
                     <a href="#">Home</a>
                     <a href="#">Agent</a>
                     <a href="#">About</a>
                     <a href="#">Listing</a>
                     <a href="#">Blog</a>
-                    <a href="#">Contact</a>
+            
                 </p>
                 <ul class="ftco-footer-social p-0">
                     <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span class="ion-logo-twitter"></span></a></li>
@@ -11883,7 +11883,7 @@
                 <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     Copyright &copy;<script>
                         document.write(new Date().getFullYear());
-                    </script> All rights reserved | This template is made with <i class="ion-ios-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+                    </script> All rights reserved | This template is made with <i class="ion-ios-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Opep.com</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
             </div>
         </div>
