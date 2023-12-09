@@ -219,7 +219,7 @@ if (isset($_POST['addToCart'])) {
                          <!-- log out -->
                         <li>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
-                          <a href="connection.php">
+                          <a href="index.php">
                           <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
                         </a>
                         </form>
