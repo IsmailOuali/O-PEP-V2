@@ -5,7 +5,7 @@ include("traitement.php") ;
 //-------------------------------- Connection-----------------------------------------
 $tabl=array();
 if (isset($_POST['submitConn'])) {
-
+    
     session_start();
     $emailConn = $_POST["emailConn"];
     $mdpConn = $_POST["mdpConn"];
@@ -27,6 +27,7 @@ if (isset($_POST['submitConn'])) {
             }
             
             $_SESSION['idUtl']=$tabl[1];
+
             $nomRole = $tabl[0];
             
            

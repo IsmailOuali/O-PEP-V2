@@ -22,6 +22,11 @@ if (isset($_POST['addToCart'])) {
     }
 }
 
+if(isset($_POST['logout'])){
+    session_destroy();
+    header('location:connection.php');
+}
+
 
 ?>
 
@@ -39,11 +44,7 @@ if (isset($_POST['addToCart'])) {
     <title>Document</title>
 </head>
 <style>
-    body {
-        /* background-color: #132A13; */
-        /* color: aliceblue;
-        margin-top: 2rem; */
-    }
+
 
     .sec1 h1 {
         font-size: 3.5vw;
@@ -200,10 +201,10 @@ if (isset($_POST['addToCart'])) {
                     </li>
                     <!-- log out -->
                     <li>
-                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <a href="connection.php">
-                                <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
-                            </a>
+                        <form method="post">
+                            
+                                <button class=" btn ri-logout-box-r-line" style="font-size:27px;cursor: pointer; background-color: transparent;" name="logout"></button>
+                            
                         </form>
                       </li>
 
@@ -242,7 +243,7 @@ if (isset($_POST['addToCart'])) {
                 </div>
                 <div class="division2" style="width: 58%; padding:24px ">
                     <div>
-                        <h1><?php echo $themeTitle; ?></h1>
+                        <h1><?php echo  $themeTitle; ?></h1>
                         <p><?php echo $themeDescription; ?></p>
                     </div>
                     <div class="division12" style=" margin-top:40px">
