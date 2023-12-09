@@ -5,7 +5,7 @@ include 'traitement.php';
 <div class="w-100 row d-flex justify-content-center gap-5" style="margin-top:40px">
 
 
-  <!-- ------------add article --------------->
+  <!-- ------------pagination --------------->
   
                 <?php  
               if(isset($_POST['page']) && isset($_POST['theme'])) {

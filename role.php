@@ -10,7 +10,7 @@ if (isset($_POST['submitRole'])) {
     if (!empty($role) && !empty($idUtilisateur)) {
         $query = "INSERT INTO roles (nomRole, idUtl) VALUES ('$role', $idUtilisateur)";
         $result = $conn->query($query);
-        header("Location: connection.php");
+        header("Location: index.php");
     }
 }
 
