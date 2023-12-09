@@ -88,7 +88,7 @@ if (isset($_POST['submitInsc'])) {
                                 </button>
 
                                 <!-- Inscription button -->
-                                <a href="connection.php" >
+                                <a href="index.php" >
                                     Se connecter
                                 </a>
                             </form>

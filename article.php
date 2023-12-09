@@ -88,6 +88,7 @@ if(isset($_POST['addComm'])){
         color: black;
     }
 
+    
     .sec1 button {
         color: white;
         background-color: transparent;
@@ -249,7 +250,7 @@ if(isset($_POST['addComm'])){
                          <!-- log out -->
                         <li>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
-                          <a href="connection.php">
+                          <a href="index.php">
                           <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
                         </a>
                         </form>
@@ -566,7 +567,9 @@ if(isset($_POST['addComm'])){
 
         }
       }
-      xml.open('GET','tags.php?TAGGid='+value);
+      var idth = "<?php echo $idth; ?>";  
+       xml.open('GET', 'tags.php?TAGGid=' + value + '&idth=' + idth, true);
+      // xml.open('GET','tags.php?TAGGid='+value +'&idth='<?php $idth ?> );
       xml.send();
     })
     })
