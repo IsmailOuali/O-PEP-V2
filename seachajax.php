@@ -3,7 +3,7 @@ include 'traitement.php';
 
 if(isset($_GET['search'])) {
    ?>
-   <div class="w-100 row gap-2  gap-2 mx-auto justify-content-center">
+   <div class="w-100 row   gap-2 mx-auto justify-content-center">
    <?php
    $search = $_GET['search'];
    $idth = $_GET['idTh'];
