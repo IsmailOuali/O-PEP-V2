@@ -392,7 +392,7 @@ if(isset($_POST['addComm'])){
 </div>
 <div id="cardT" class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
   <?php  
-  $reqarticle="select * from articles where idTh=$idth LIMIT 6 ";
+  $reqarticle="select idAr,nomAr,SUBSTRING(descriptionAr, 1, 100),imageAr,dateAr from articles where idTh=$idth LIMIT 6 ";
   $result=mysqli_query($conn,$reqarticle);
   while($row=mysqli_fetch_row($result)) {
    $articleId = $row[0];
