@@ -262,28 +262,28 @@ if (isset($_POST['addToCart'])) {
     </section>
     <!-- ... ________________ ... -->
     <section class="sec2 d-flex justify-content-center mt-5">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border:1px solid white; border-radius:20px; width:40%;">
-            <div class="container-fluid "style="dispaly:flex; flex-between">
-                <form method="get" action="" class="d-flex justify-content-center" role="search">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border:1px solid white; border-radius:20px; width:37%;">
+            <div class="d-flex" style="gap:20px">
+                <form method="get"  class="d-flex justify-content-center" role="search">
                     <a class="navbar-brand" href="?view_all" style="color:white">View All</a>
 
-                    <div style="display: flex; justify-content:space-between">
-                    <select name="categorie" id="categorieSelect" style="border-radius: 5px; height:38px" onchange="submitForm()">
-                        <option value="all">Toutes les catégories</option>
+                    <div style="display: flex; ">
+                    <select name="categorie" id="categorieSelect" style="border-radius: 5px; height:38px ; background-color: transparent; color:white" onchange="submitForm()">
+                        <option style="color: black" value="all">Toutes les catégories</option>
                         <?php
                         $categoriesQuery = $conn->query("SELECT DISTINCT idCategorie, nomCategorie FROM categories");
                         $categories = $categoriesQuery->fetch_all(MYSQLI_ASSOC);
                         foreach ($categories as $category) {
-                            echo '<option value="' . $category['idCategorie'] . '">' . $category['nomCategorie'] . '</option>';
+                            echo '<option style="color: black" value="' . $category['idCategorie'] . '">' . $category['nomCategorie'] . '</option>';
                         }
                         ?>
                     </select>
 
                     </div>
                 </form>
-                <form method="get" class="d-flex justify-content-center"style="margin-left:50px">
-                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" id="searchInput" style="height: 40px;">
-                    <button class=" searchbtn btn-success"name="search_but" type="sumbit" style=" border-radius: 0 40px  40px 0; height:40px">GO</button>
+                <form method="get" class="d-flex justify-content-center">
+                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" id="searchInput" style="height: 40px;background-color: transparent; color:white;border-radius: 5px ;">
+                    <button class=" searchbtn btn-success"name="search_but" type="sumbit" style=" border-radius: 0 40px  40px 0; height:40px ; background-color: transparent">GO</button>
                 </form>
 
             </div>
