@@ -148,7 +148,7 @@ body {
     </header>
     <!-- End Navbar -->
             <div class="bg-white flex justify-center">
-                <div class="mt-10 mx-8" style="width: 50%;">
+                <div class="mt-10 mx-8 mb-36" style="width: 50%;">
                     <img style="width: 100%;" src="<?php echo $article['imageAr']; ?>" alt="<?php echo $article['nomAr']; ?>" class="">
                 </div>
                 <div class="w-1/2 flex flex-col justify-center items-start">
@@ -164,3 +164,4 @@ body {
 
 </body>
 </html>
+<?php include './include/footer.php' ?>
