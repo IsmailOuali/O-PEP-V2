@@ -573,6 +573,19 @@ if(isset($_POST['addComm'])){
       xml.send();
     })
     })
+
+
+    function DELETECOMMENT (id) {
+          let xml = new XMLHttpRequest();
+
+          xml.onreadystatechange = function () {
+            if(this.status == 200 && this.readyState==4){
+              location.reload();
+            }
+          }
+          xml.open('GET' , 'DELETECOMMENT.php?idcom='+id);
+          xml.send();
+    }
 </script>
 </body>
 </html>
