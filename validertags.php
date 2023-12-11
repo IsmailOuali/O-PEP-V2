@@ -27,4 +27,3 @@ if(isset($_GET['tag'])){
 }
 
 ?> </div>
-<?php include './include/footer.php' ?>
