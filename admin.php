@@ -148,7 +148,10 @@ if ($result != false) {
 if (isset($_POST['submitSuppressionArticle'])) {
 
      $idArticle = $_POST['idArticleSuppression'];
-    echo "<script>alert('ID de l'article à supprimer : " . $idArticle . "')</script>";
+
+
+    $deleteCommentsQuery = "DELETE FROM commentaire WHERE idAr = '$idArticle'";
+    $resultComments = $conn->query($deleteCommentsQuery);
 
     $deleteArticleQuery = "DELETE FROM articles WHERE idAr = '$idArticle'";
     $result = $conn->query($deleteArticleQuery);
@@ -295,7 +298,7 @@ if (isset($_POST['submitSuppressionArticle'])) {
                 <label for="stockPlante">Stock:</label>
                 <input type="number" id="stockPlante" name="stockPlante" required><br>
 
-                <label for="prixFr">Prix (en Francs CFA):</label>
+                <label for="prixFr">Prix (en DH):</label>
                 <input type="number" id="prixFr" name="prix" required><br>
 
                 <!-- ... Ajoutez d'autres champs si nécessaire ... -->

@@ -193,17 +193,17 @@ if(isset($_POST['logout'])){
                     <li class="nav__item">
                         <a href="blog.php" style="font-size: 20px;">Blog</a>
                     </li>
-                    <!-- shopping cart -->
+                    <!-- shopping cart
                     <li>
                         <a href="panier.php" style="cursor: pointer;">
                             <i class="ri-shopping-bag-line" style="font-size:27px;"></i>
                         </a>
-                    </li>
+                    </li> -->
                     <!-- log out -->
                     <li>
                         <form method="post">
                             
-                                <button class=" btn ri-logout-box-r-line" style="font-size:27px;cursor: pointer; background-color: transparent;" name="logout"></button>
+                                <button class=" btn ri-logout-box-r-line" style="font-size:27px;cursor: pointer; background-color: transparent; color:white" name="logout"></button>
                             
                         </form>
                     </li>

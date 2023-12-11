@@ -216,14 +216,7 @@ if (isset($_POST['addToCart'])) {
                             <a href="blog.php"  style="font-size: 20px;">Blog</a>
                         </li>
 
-                         <!-- log out -->
-                        <li>
-                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
-                          <a href="index.php">
-                          <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
-                        </a>
-                        </form>
-                      </li>
+
                       <li >
                     <a href="panier.php" class="d-flex">
                         <svg xmlns="http://www.w3.org/2000/svg"  width="30" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
@@ -231,6 +224,14 @@ if (isset($_POST['addToCart'])) {
                         </svg>
                         <p class=" count"><?php echo $count ?></p>
                     </a> 
+                      </li>
+                                               <!-- log out -->
+                                               <li>
+                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
+                          <a href="index.php">
+                          <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
+                        </a>
+                        </form>
                       </li>
                     </ul>  
 
