@@ -80,6 +80,7 @@ if(isset($_POST['addComm'])){
         width: 24vw;
         color: black;
         width: 40vw;
+        
     }
 
     .sec1 p {
@@ -95,6 +96,7 @@ if(isset($_POST['addComm'])){
         border: 2px solid white;
         width: 10vw;
         margin-top: 2rem;
+      
     }
 
     .sec3 .card {
@@ -242,11 +244,11 @@ if(isset($_POST['addComm'])){
                             <a href="blog.php"  style="font-size: 20px;">Blog</a>
                         </li>
                         <!-- shopping cart -->
-                        <li>
+                        <!-- <li>
                           <a href="panier.php" style="cursor: pointer;">
                             <i class="ri-shopping-bag-line" style="font-size:27px;"></i>
                         </a>
-                      </li>
+                      </li> -->
                          <!-- log out -->
                         <li>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
@@ -332,13 +334,16 @@ if(isset($_POST['addComm'])){
         <form method="POST" class="d-flex justify-content-center flex-column">
           <div class="user_com d-flex gap-1">
           <img src="plantes/user2.png" alt="user" style="border-radius: 50%; width:30px; height:30px">
-          <textarea style="width: 200px;" type="text"  name="commente" ></textarea>
+          <div class="d-felx align-items-center">
+            <textarea style="width: 200px;border-radius:7px;font-size:13px" type="text"  name="commente" placeholder="Ajouter un commentaire..."></textarea>
+            </div>
+            <div class="btn d-flex justify-content-center gap-1 align-items-cenr">
+            <input id="articleIdPopup" type="hidden" name="articleId" value="">
+            <button class="btnTags" type="submit" name="addComm" style="background-color: blue; height:30px; color:white ;font-size:12px">Publier</button>
+            <button class="btnTags" type="submit" name="cancel" style="height:30px; color:blue ;font-size:12px">Annuler</button>
+            </div>
           </div>
-          <div class="btn d-flex justify-content-center gap-1 ">
-          <input id="articleIdPopup" type="hidden" name="articleId" value="">
-          <button class="btnTags" type="submit" name="addComm" style="background-color: blue; height:30px; color:white ;font-size:12px">POST COMMENT</button>
-          <button class="btnTags" type="submit" name="cancel" style="height:30px; color:blue ;font-size:12px">CANCEL</button>
-          </div>
+
         </form>
         
         </div>
@@ -354,8 +359,10 @@ if(isset($_POST['addComm'])){
 </form>
 </div>
 <div class="barre d-flex justify-content-center align-items-center gap-5">
+
   <!-- ------------tags------------------- -->
-  <div class="tags d-flex gap-3 " style=" margin-left:50px">
+  <div class="tags d-flex gap-3 ">
+  <div><a href="article.php?id=<?php echo $idth;?>" style="font-size: 20px;color:black ; margin-left:25px">View all</a></div>
           <?php
               $req="SELECT *
               FROM tags tg
@@ -366,7 +373,7 @@ if(isset($_POST['addComm'])){
               $result= $conn->query($req);
               while ($row=$result->fetch_assoc()) {
                 ?>
-                <button class="btnTags btns" value="<?php echo $row['nomTag']?>"><?php echo $row['nomTag']?></button>
+                <button class="btnTags btns" value="<?php echo $row['nomTag']?>">@<?php echo $row['nomTag']?></button>
                 <?php
                 }          
             ?>
@@ -390,6 +397,7 @@ if(isset($_POST['addComm'])){
         </div>
     </div>
 </div>
+
 <div id="cardT" class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
   <?php  
   $reqarticle="select * from articles where idTh=$idth LIMIT 6 ";
@@ -411,8 +419,8 @@ if(isset($_POST['addComm'])){
 
 
     <h4 class="card-title"><?php echo $row[1] ?></h4>
-      <span class="mask rgba-white-slight text-success"><?php echo $row[4] ?></span>
-    <p class="card-text" ><?php echo $row[2] ?></p>
+      <span  style="color: black;"><?php echo $row[4] ?></span>
+    <p class="card-text" style="color: black;"><?php echo $row[2] ?></p>
     <div class="imogi_Read d-flex justify-content-between align-items-center">
 
       <div class="imogi d-flex gap-4">
@@ -465,7 +473,7 @@ if(isset($_POST['addComm'])){
       }
       ?>
     </div>
-  <?php
+  <?php   
   }
  ?>
 </div>
@@ -535,6 +543,8 @@ if(isset($_POST['addComm'])){
     })
   })
 </script>
+
+
 <script>
   function getarticleId(id){
     console.log(id);
@@ -573,6 +583,31 @@ if(isset($_POST['addComm'])){
       xml.send();
     })
     })
+
+
+    function DELETECOMMENT (id) {
+          let xml = new XMLHttpRequest();
+
+          xml.onreadystatechange = function () {
+            if(this.status == 200 && this.readyState==4){
+              location.reload();
+            }
+          }
+          xml.open('GET' , 'DELETECOMMENT.php?idcom='+id);
+          xml.send();
+    }
+
+    function ModifyComment (id) {
+          let xml = new XMLHttpRequest();
+
+          xml.onreadystatechange = function () {
+            if(this.status == 200 && this.readyState==4){
+              location.reload();
+            }
+          }
+          xml.open('GET' , 'ModifyComment.php?idcom='+id);
+          xml.send();
+    }
 </script>
 </body>
 </html>
