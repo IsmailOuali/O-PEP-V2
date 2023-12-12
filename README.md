@@ -4,4 +4,8 @@
 
 ![diagramme_de_classe_R](https://github.com/IsmailOuali/O-PEP-V2/assets/125483549/0481e433-24b3-48e0-b2db-b4baf4a102f3)
 HOSTIGN : http://opepv2.42web.io/index.php
+
+ diagrame de cas d'utilisation  :
+ ![image](https://github.com/IsmailOuali/O-PEP-V2/assets/125483549/146ee2d2-348f-493f-912c-f27236b58422)
+
  
