@@ -1,4 +1,6 @@
 diagramme de cas d'utilistion: 
-https://cdn.discordapp.com/attachments/1178696911553839154/1188582806264238111/image.png?ex=659b0cff&is=658897ff&hm=b7c37460ba6cf7b0ee2ed37bd2b56d97c26ac6ba8edad55f8ec1e1b6d79795c1&
+![image](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/b71b77c2-aea8-4879-9d5c-c2ac308ef684)
+
 diagramme de classe: 
-https://cdn.discordapp.com/attachments/1178696911553839154/1188582563615359047/image.png?ex=659b0cc5&is=658897c5&hm=39018a84b312ae73b5e60523812dc41b95a2540a2df87af61107d73fbd4a320d&
+![image](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/00e10bc0-9159-474f-8c08-7c986572494a)
+
