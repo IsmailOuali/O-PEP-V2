@@ -17,8 +17,8 @@ page login:
 page role:
 
 
+![Capture d'écran 2023-12-29 214440](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/488500be-bafd-4be1-9a41-92a2ea8972c4)
 
-![Capture d'écran 2023-12-29 211450](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/d907cc75-b1c6-4ab3-ad3e-8d856e6cd1d2)
 
 page home:
 
@@ -35,6 +35,11 @@ page blog:
 
 ![Capture d'écran 2023-12-29 212908](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/6a6859cf-5efa-4aee-9e75-b4d68ac5ca57)
 ![Capture d'écran 2023-12-29 212936](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/a4fb32f2-b03c-4a19-9079-a58b8c90bfd4)
+
+
+page admin :
+
+![Capture d'écran 2023-12-29 212033](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/73a6d4c4-d008-4b3b-aa64-7de2035ca56b)
 
 
 
