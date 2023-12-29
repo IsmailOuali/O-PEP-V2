@@ -24,7 +24,8 @@ page home:
 
 ![Capture d'écran 2023-12-29 212404](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/1448dda2-a95e-4703-8c10-babdc47e4e9f)
 
-![Capture d'écran 2023-12-29 212420](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/d5c5c127-883d-4b5a-abcb-91bd63d3f7dc)
+![Capture d'écran 2023-12-29 214834](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/17656340-872b-4347-b830-c3fb6cac0167)
+
 
 ![Capture d'écran 2023-12-29 212441](https://github.com/IsmailOuali/O-PEP-V2/assets/109187438/1faee514-3976-4ac9-a3b3-b29430e70154)
 
