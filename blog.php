@@ -1,26 +1,26 @@
 <?php include("traitement.php");
 
-session_start();
-$userId = $_SESSION['idUtl'];
-$reqet = "SELECT * FROM panier JOIN plantes ON panier.idPlante = plantes.idPlante WHERE idUtl= $userId";
-$result2 = $conn->query($reqet);
-$count = mysqli_num_rows($result2);
+// session_start();
+// $userId = $_SESSION['idUtl'];
+// $reqet = "SELECT * FROM panier JOIN plantes ON panier.idPlante = plantes.idPlante WHERE idUtl= $userId";
+// $result2 = $conn->query($reqet);
+// $count = mysqli_num_rows($result2);
 
-if (isset($_POST['addToCart'])) {
+// if (isset($_POST['addToCart'])) {
 
-    $plantId = $_POST['addToCart'];
+//     $plantId = $_POST['addToCart'];
 
-    $insertQuery = "INSERT INTO panier (idUtl, idPlante, quantite) VALUES ('$userId','$plantId',1)";
-    $result = $conn->query($insertQuery);
+//     $insertQuery = "INSERT INTO panier (idUtl, idPlante, quantite) VALUES ('$userId','$plantId',1)";
+//     $result = $conn->query($insertQuery);
 
-    if ($result) {
-        // rje3 l page li 9bel
-        header('location:' . $_SERVER['HTTP_REFERER']);
-        exit;
-    } else {
-        echo "<script>alert('erreur d'ajout')</script>";
-    }
-}
+//     if ($result) {
+//         // rje3 l page li 9bel
+//         header('location:' . $_SERVER['HTTP_REFERER']);
+//         exit;
+//     } else {
+//         echo "<script>alert('erreur d'ajout')</script>";
+//     }
+// }
 
 
 ?>
