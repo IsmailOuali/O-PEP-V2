@@ -150,7 +150,10 @@ if ($result != false) {
 if (isset($_POST['submitSuppressionArticle'])) {
 
      $idArticle = $_POST['idArticleSuppression'];
-    echo "<script>alert('ID de l'article à supprimer : " . $idArticle . "')</script>";
+
+
+    $deleteCommentsQuery = "DELETE FROM commentaire WHERE idAr = '$idArticle'";
+    $resultComments = $conn->query($deleteCommentsQuery);
 
     $deleteArticleQuery = "DELETE FROM articles WHERE idAr = '$idArticle'";
     $result = $conn->query($deleteArticleQuery);
@@ -162,6 +165,7 @@ if (isset($_POST['submitSuppressionArticle'])) {
         echo "<script>alert('Erreur lors de la suppression de l'article : " . $conn->error . "')</script>";
     }
 }
+
 
 
 ?>
@@ -181,6 +185,23 @@ if (isset($_POST['submitSuppressionArticle'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>OPEP</title>
+    <style>
+          .btnTags{
+      border-radius: 7px;
+      height: 40px;
+      width: auto;
+      margin-top: 20px;
+      background-color: #132a137e;
+      color: white;
+    }
+    .tags{
+        margin: 0 0 15px 0;
+    }
+    #affichageChamp{
+      
+        padding: 20px 0;
+    }
+    </style>
 </head>
 <body class="body">
     <section class="header">
@@ -279,7 +300,7 @@ if (isset($_POST['submitSuppressionArticle'])) {
                 <label for="stockPlante">Stock:</label>
                 <input type="number" id="stockPlante" name="stockPlante" required><br>
 
-                <label for="prixFr">Prix (en Francs CFA):</label>
+                <label for="prixFr">Prix (en DH):</label>
                 <input type="number" id="prixFr" name="prix" required><br>
 
                 <!-- ... Ajoutez d'autres champs si nécessaire ... -->
@@ -356,37 +377,31 @@ function afficherFormulaireModificationTheme() {
             <h2>Modifier Theme</h2>
             <form method="POST" onsubmit="submitModificationTheme()">
                 <label for="idThemeModification">Sélectionnez le Theme à modifier :</label>
-                <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne()">
+                <select id="champSelectionne" name="idThemeModification" class="form-control" required onchange="afficherChampSelectionne(this)">
+                <option Selected>Select ...</option>
                     <?php
                     // Récupérer les catégories depuis la base de données
                     $ThemesQuery = $conn->query("SELECT * FROM themes");
-
+                          
                     while ($Theme = $ThemesQuery->fetch_assoc()) {
-                        echo "<option value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
+                        echo "<option class='option' value='{$Theme['idTh']}'>{$Theme['nomTh']}</option>";
                     }
                     ?>
                 </select><br>
+              
                 <label for="nouveauNomTheme">Nouveau nom de Theme :</label>
                 <input type="text" id="nouveauNomTheme" name="nouveauNomTheme" class="form-control" required><br>
                 <label for="nouveauDescriptionTheme">Nouveau Description de Theme :</label>
                 <input type="text" id="nouveauDescriptionTheme" name="nouveauDescriptionTheme" class="form-control" required><br>
                 <label for="nouveauImageTheme">Nouveau Image de Theme :</label>
                 <input type="text" id="nouveauImageTheme" name="nouveauImageTheme" class="form-control" required><br>
-                <h3>Tags</h3>
-                <p id="affichageChamp"></p>
-                <button type="submit" name="submitModificationTheme">Modifier</button>
+                <h3 class="tags">Tags</h3>
+                <div id="affichageChamp"></div>
+                <button type="submit" name="submitModificationTheme" class="btnTags" >Modifier</button>
             </form>
         `;
     }
 
-    function afficherChampSelectionne() {
-        // Récupérer la valeur sélectionnée de la liste déroulante
-        var champSelectionne = document.getElementById("champSelectionne").value;
-
-        // Afficher la valeur sélectionnée
-        document.getElementById("affichageChamp").innerText = "Champ sélectionné : " + champSelectionne;
-        
-    }
 
 
 
@@ -468,6 +483,32 @@ function fermerFormulaireModificationTheme() {
         var formContainer = document.getElementById("formContainer");
         formContainer.innerHTML = "";
     }
+
+
+    var input =document.querySelectorAll('#champSelectionne');
+    input.forEach(btn=>{
+        btn.addEventListener("click",function(){
+            let x=this.value;
+            console.log(x);
+        })
+    })
+
+
+    function afficherChampSelectionne(selectElement) {
+    const selectedValue = selectElement.value;
+    console.log("Selected Value:", selectedValue);
+
+
+    var xhr = new XMLHttpRequest(); 
+   //modifier 
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.querySelector('#affichageChamp').innerHTML = this.responseText;
+        }
+    };
+    xhr.open("GET", "validertags.php?tag="+selectedValue, true);
+        xhr.send();
+}
 
 </script>
 
