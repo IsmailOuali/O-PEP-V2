@@ -1,34 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sélection de champ</title>
-</head>
-<body>
-
-<h2>Sélectionnez un champ :</h2>
-
-<!-- Liste déroulante -->
-<select id="champSelectionne" onchange="afficherChampSelectionne()">
-    <option value="champ1">Champ 1</option>
-    <option value="champ2">Champ 2</option>
-    <option value="champ3">Champ 3</option>
-</select>
-
-<!-- Affichage du champ sélectionné -->
-<p id="affichageChamp"></p>
-
-<script>
-function afficherChampSelectionne() {
-    // Récupérer la valeur sélectionnée de la liste déroulante
-    var champSelectionne = document.getElementById("champSelectionne").value;
-
-    // Afficher la valeur sélectionnée
-    document.getElementById("affichageChamp").innerText = "Champ sélectionné : " + champSelectionne;
+<?php
+include_once('./traitement.php');
+session_start();
+if(isset($_SESSION['idUtl'])){
+  $idsession = $_SESSION['idUtl'];
 }
-</script>
 
-</body>
-</html>
+$req2 = "SELECT nomUtl FROM utilisateurs u
+         WHERE u.idUtl = $idsession";
+$result2 = $conn->query($req2);
+$row2 = $result2->fetch_assoc();
+
+if(isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    //affichage
+    $req = "SELECT c.contenuCom , c.idCom , u.nomUtl , u.idUtl
+    FROM articles a , utilisateurs u , commentaire c
+    where c.idUtl = u.idUtl and a.idAr = c.idAr and a.idAr= $id";
+
+    $result_Affiche = $conn->query($req);
+
+
+while ($row = $result_Affiche->fetch_assoc() ) {
+    ?>
+    <div class="commentTex d-flex flex-column">
+      <div class="div1 d-flex">
+        <img src="plantes/user2.png" alt="user" style="border-radius: 50%; width:30px; height:30px;">
+        <h5><?php echo $row['nomUtl']; ?></h5>
+      </div>
+      <div class="d-flex gap-4">
+        <p   style="max-width: 20vw;height:auto; border-radius:7px;margin-left:15px;border: 1px solid;font-size:13px"><?php echo $row['contenuCom']; ?></p>
+        <?php if($idsession == $row['idUtl']){?>
+        <div class="Mod_Del d-flex gap-2 justify-content-center ">
+          <a style="cursor: pointer;  color:red" onclick="DELETECOMMENT(<?php echo $row['idCom']?>)">Delete</a>
+          <a style="cursor: pointer;  color:blue" onclick="">Modify</a>
+        </div>
+        <?php }?>
+      </div>
+
+      <div class="mt-4"></div>
+    </div>
+  <?php
+    }
+}
+
+?>

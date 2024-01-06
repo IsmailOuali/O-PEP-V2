@@ -36,7 +36,7 @@ if (isset($_POST["save_data"])) {
 
        
           echo "<script>alert('Article cree avec succès.')</script>";
-          // echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
+          echo "<script>setTimeout(function(){ window.location.href = 'blog.php'; }, 1000);</script>";
       } else {
 
           echo "Erreur de creation : " . mysqli_error($conn);
@@ -44,24 +44,44 @@ if (isset($_POST["save_data"])) {
   } 
 }
 
+if(isset($_POST['cancel'])){
+  header("Location: article.php?id=$idth");
+}
+
+if(isset($_POST['addComm'])){
+  $commenter=$_POST['commente'];
+  
+  $idAr=$_POST['articleId'];
+  
+  
+  // insertion du commentaire
+  $req = "INSERT INTO commentaire (contenuCom, idUtl, idAr) VALUES 
+        ('$commenter', '$idUser', '$idAr')";
+
+  $result = mysqli_query($conn, $req);
+
+  if ($result) {
+      echo "<script>alert('commenter cree avec succès.')</script>";
+      echo "<script>setTimeout(function(){ window.location.href = 'article.php?id=$idth'; }, 1000);</script>";
+  } else {
+
+      echo "Erreur de creation : " . mysqli_error($conn);
+  }
+  
+}
+
 
 ?>
 
-
-
-
 <style>
-        body {
-        /* background-color: #132A13; */
-        /* color: aliceblue;
-        margin-top: 2rem; */
-    }
+
 
     .sec1 h1 {
         font-size: 3.5vw;
         width: 24vw;
         color: black;
         width: 40vw;
+        
     }
 
     .sec1 p {
@@ -70,12 +90,14 @@ if (isset($_POST["save_data"])) {
         color: black;
     }
 
+    
     .sec1 button {
         color: white;
         background-color: transparent;
         border: 2px solid white;
         width: 10vw;
         margin-top: 2rem;
+      
     }
 
     .sec3 .card {
@@ -153,7 +175,6 @@ if (isset($_POST["save_data"])) {
     gap: 3rem;
     align-items: center;
     
-
     }
     .nav__list a{
         color: white;
@@ -179,14 +200,18 @@ if (isset($_POST["save_data"])) {
         font-size: 1.25rem;
     }
     .btnTags{
-      border-radius: 7px;
+      border-radius: 10px;
       height: 40px;
       width: auto;
-      background-color: #132a137e;
-      color: white;
+      background-color: transparent;
+      color: black;
     }
     .imogies{
       cursor: pointer;
+    }
+    .modal-content{
+      max-height: 80vh;
+      overflow-y: scroll !important;
     }
 
 
@@ -194,13 +219,13 @@ if (isset($_POST["save_data"])) {
 </style>
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <title>Document</title>
@@ -220,15 +245,15 @@ if (isset($_POST["save_data"])) {
                             <a href="blog.php"  style="font-size: 20px;">Blog</a>
                         </li>
                         <!-- shopping cart -->
-                        <li>
+                        <!-- <li>
                           <a href="panier.php" style="cursor: pointer;">
                             <i class="ri-shopping-bag-line" style="font-size:27px;"></i>
                         </a>
-                      </li>
+                      </li> -->
                          <!-- log out -->
                         <li>
                         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
-                          <a href="connection.php">
+                          <a href="index.php">
                           <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
                         </a>
                         </form>
@@ -241,7 +266,7 @@ if (isset($_POST["save_data"])) {
                     </div>   
             </nav>
     </header>
-    <!-------------------------------------------------------------- section de popup ----------------------------------------------------------->
+    <!-------------------------------------------------------------- section de popup add article ----------------------------------------------------------->
   <section class="popupArticle">
   <div class="modal fade"  id="insertdata" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="insertdataLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -293,15 +318,49 @@ if (isset($_POST["save_data"])) {
     </div>
   </div>
   </section>
-<!-- --------------------------------------------------fin-------------------------------------------------------- -->
+<!-- --------------------------------------------------popup commentaire -------------------------------------------------------- -->
+<section class="popupCommentaire">
+    <div class="modal fade" id="insertdataCommentaire" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="insertdataLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="insertdataLabel">Commentaire</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="CMT">
+<!-- comments -->
+
+</div>
+
+        <form method="POST" class="d-flex justify-content-center flex-column">
+          <div class="user_com d-flex gap-1">
+          <img src="plantes/user2.png" alt="user" style="border-radius: 50%; width:30px; height:30px">
+          <div class="d-felx align-items-center">
+            <textarea style="width: 200px;border-radius:7px;font-size:13px" type="text"  name="commente" placeholder="Ajouter un commentaire..."></textarea>
+            </div>
+            <div class="btn d-flex justify-content-center gap-1 align-items-cenr">
+            <input id="articleIdPopup" type="hidden" name="articleId" value="">
+            <button class="btnTags" type="submit" name="addComm" style="background-color: blue; height:30px; color:white ;font-size:12px">Publier</button>
+            <button class="btnTags" type="submit" name="cancel" style="height:30px; color:blue ;font-size:12px">Annuler</button>
+            </div>
+          </div>
+
+        </form>
+        
+        </div>
+    </div>
+  </div>
+  </section>
+<!---------------------------------------------------------------------------------------------------------------------------------->
 
 <section class="w-100 " style="margin-top: 150px;" >
 <div class="w-75 input-group rounded mx-auto my-3">
 <form class="w-50 input-group rounded mx-auto md-form form-sm" method="post" action="">
-  <input class="form-control border border-success form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" id="Search" name="keyword">
+  <input style="width:30vw ; height: 3vw " class="" type="text" placeholder="Search" aria-label="Search" id="Search" name="keyword">
 </form>
 </div>
 <div class="barre d-flex justify-content-center align-items-center gap-5">
+
   <!-- ------------tags------------------- -->
   <div class="tags d-flex gap-3">
   <?php
@@ -312,21 +371,15 @@ if (isset($_POST["save_data"])) {
               WHERE th.idTh = $idth";
 
               $result= $conn->query($req);
-              ?>
-              <form action="" method="post">
-                <?php
-                while ($row=$result->fetch_assoc()) {
-                  ?>
-                <input type="submit" value="<?php echo $row['nomTag'] ?>" class="btnTags" name="<?php echo $row['idTag'] ?>">
-
-                <?php
-                
-                }
+              while ($row=$result->fetch_assoc()) {
                 ?>
-                </form>
+                <button class="btnTags btns" value="<?php echo $row['nomTag']?>">@<?php echo $row['nomTag']?></button>
+                <?php
+                }          
+            ?>
   </div>
   <!-- ------------add article --------------->
-  <div class="" >
+  <div style="margin-left: 50px" >
         <div class=" justify-content-center ">
             <div class="">
                 <div class="">
@@ -339,18 +392,18 @@ if (isset($_POST["save_data"])) {
                         </button>
 
                     </div>
-                  
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
+
+<div id="cardT" class="w-100 row d-flex justify-content-center gap-5 test" style="margin-top:40px">
   <?php  
-  $reqarticle="select * from articles where idTh=$idth LIMIT 6 ";
+  $reqarticle="select idAr,nomAr,SUBSTRING(descriptionAr, 1, 60),imageAr,dateAr from articles where idTh=$idth LIMIT 6 ";
   $result=mysqli_query($conn,$reqarticle);
   while($row=mysqli_fetch_row($result)) {
-   $_SESSION['idAr']=$row[0];
+   $articleId = $row[0];
   ?>
 <div class="card mb-4 col- "style="width:25%">
 
@@ -366,22 +419,21 @@ if (isset($_POST["save_data"])) {
 
 
     <h4 class="card-title"><?php echo $row[1] ?></h4>
-      <span class="mask rgba-white-slight text-success"><?php echo $row[4] ?></span>
-    <p class="card-text" ><?php echo $row[2] ?></p>
+      <span  style="color: black;"><?php echo $row[4] ?></span>
+    <p class="card-text" style="color: black;"><?php echo $row[2] ?></p>
     <div class="imogi_Read d-flex justify-content-between align-items-center">
 
       <div class="imogi d-flex gap-4">
             <!-- commentaire -->
+            
+            <button onclick="getarticleId(<?= $articleId ?>)" id="commentaire"class="btn" data-bs-toggle="modal" data-bs-target="#insertdataCommentaire">
             <svg class="imogies" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
             <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894m-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
             </svg>
-            <!-- like -->
-            <svg class="imogies"  xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-hand-thumbs-up" viewBox="0 0 16 16">
-            <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
-            </svg>
+            </button>
       </div>
       <div class="read d-flex justify-content-center align-items-center">
-        <button type="submit" name="read_more" id="read" class="btn btn-light-blue btn-md">Read more</button>
+        <a  href="./oneArticle.php?id=<?php echo $articleId?>" name="read_more" id="read" class="btn btn-light-blue btn-md">Read more </a>
         <svg xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
         </svg>
@@ -421,7 +473,7 @@ if (isset($_POST["save_data"])) {
       }
       ?>
     </div>
-  <?php
+  <?php   
   }
  ?>
 </div>
@@ -470,7 +522,7 @@ if (isset($_POST["save_data"])) {
   pagebutton.forEach(BTNNM => {
     BTNNM.addEventListener("click", function() {
       let pagevalue = this.value;
-      // Search.value="";
+
 
 
       let HTTP = new XMLHttpRequest();
@@ -490,6 +542,72 @@ if (isset($_POST["save_data"])) {
 
     })
   })
+</script>
+
+
+<script>
+  function getarticleId(id){
+    console.log(id);
+    document.getElementById('articleIdPopup').value = id;
+
+    let xml = new XMLHttpRequest();
+    xml.onreadystatechange = function() {
+      if(this.status==200) {
+          console.log(id);
+          document.querySelector('.CMT').innerHTML = this.responseText;
+      }
+    }
+    xml.open('GET','test.php?id='+id);
+    xml.send();
+  }
+
+
+
+    var btntag = document.querySelectorAll('.btns');
+    btntag.forEach(btn => {
+      btn.addEventListener("click" , function () {
+      let value = btn.value;
+      console.log(value);
+
+      let xml = new XMLHttpRequest();
+
+      xml.onload = function () {
+        if(this.status == 200 && this.readyState==4) {
+          document.getElementById('cardT').innerHTML=this.responseText;
+
+        }
+      }
+      var idth = "<?php echo $idth; ?>";  
+       xml.open('GET', 'tags.php?TAGGid=' + value + '&idth=' + idth, true);
+      // xml.open('GET','tags.php?TAGGid='+value +'&idth='<?php $idth ?> );
+      xml.send();
+    })
+    })
+
+
+    function DELETECOMMENT (id) {
+          let xml = new XMLHttpRequest();
+
+          xml.onreadystatechange = function () {
+            if(this.status == 200 && this.readyState==4){
+              location.reload();
+            }
+          }
+          xml.open('GET' , 'DELETECOMMENT.php?idcom='+id);
+          xml.send();
+    }
+
+    function ModifyComment (id) {
+          let xml = new XMLHttpRequest();
+
+          xml.onreadystatechange = function () {
+            if(this.status == 200 && this.readyState==4){
+              location.reload();
+            }
+          }
+          xml.open('GET' , 'ModifyComment.php?idcom='+id);
+          xml.send();
+    }
 </script>
 </body>
 </html>

@@ -22,6 +22,11 @@ if (isset($_POST['addToCart'])) {
     }
 }
 
+if(isset($_POST['logout'])){
+    session_destroy();
+    header('location:connection.php');
+}
+
 
 ?>
 
@@ -39,11 +44,7 @@ if (isset($_POST['addToCart'])) {
     <title>Document</title>
 </head>
 <style>
-    body {
-        /* background-color: #132A13; */
-        /* color: aliceblue;
-        margin-top: 2rem; */
-    }
+ 
 
     .sec1 h1 {
         font-size: 3.5vw;
@@ -192,22 +193,22 @@ if (isset($_POST['addToCart'])) {
                     <li class="nav__item">
                         <a href="blog.php" style="font-size: 20px;">Blog</a>
                     </li>
-                    <!-- shopping cart -->
+                    <!-- shopping cart
                     <li>
                         <a href="panier.php" style="cursor: pointer;">
                             <i class="ri-shopping-bag-line" style="font-size:27px;"></i>
                         </a>
-                    </li>
+                    </li> -->
                     <!-- log out -->
                     <li>
-                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <a href="connection.php">
-                                <i class="ri-logout-box-r-line" style="font-size:27px;"></i>
-                            </a>
+                        <form method="post">
+                            
+                                <button class=" btn ri-logout-box-r-line" style="font-size:27px;cursor: pointer; background-color: transparent; color:white" name="logout"></button>
+                            
                         </form>
-                      </li>
+                    </li>
 
-                    </ul>  
+                </ul>
 
                 <!-- <div class="logo" style="height: 40px;display: flex;justify-content: space-between; padding:40px ; margin-top:0px; color:black"></div> -->
 
@@ -225,16 +226,16 @@ if (isset($_POST['addToCart'])) {
     // Sélectionner tous les thèmes depuis la base de données
     $selectThemesQuery = "SELECT * FROM themes";
     $themesResult = $conn->query($selectThemesQuery);
-    
 
-    
+
+
     if ($themesResult->num_rows > 0) {
         while ($theme = $themesResult->fetch_assoc()) {
             $themeTitle = $theme['nomTh'];
             $themeDescription = $theme['descriptionTh'];
             $themeImage = $theme['imageTh'];
             $idth = $theme['idTh'];
-            ?>
+    ?>
 
             <section class="sec1 d-flex" style="width: 100%;">
                 <div class="division1" style="width: 42%">
@@ -242,7 +243,7 @@ if (isset($_POST['addToCart'])) {
                 </div>
                 <div class="division2" style="width: 58%; padding:24px ">
                     <div>
-                        <h1><?php echo $themeTitle; ?></h1>
+                        <h1><?php echo  $themeTitle; ?></h1>
                         <p><?php echo $themeDescription; ?></p>
                     </div>
                     <div class="division12" style=" margin-top:40px">
@@ -280,6 +281,4 @@ if (isset($_POST['addToCart'])) {
     ?>
 
 
-</body>
-
-</html>
+    <?php include './include/footer.php' ?>
